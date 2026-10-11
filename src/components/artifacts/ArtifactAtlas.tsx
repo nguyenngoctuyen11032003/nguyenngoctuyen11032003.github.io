@@ -289,7 +289,7 @@ export function ArtifactAtlas() {
 
         <div className="atlas-featured">
           <p className="atlas-eyebrow">{a.featuredEyebrow}</p>
-          <img src={model.image} alt="" className="atlas-featured-img" decoding="async" />
+          <img src={model.image} alt="" className="atlas-featured-img" decoding="async" loading="lazy" />
           <p className="atlas-featured-title">{item.featuredTitle}</p>
           <p className="atlas-featured-text">{item.featuredText}</p>
           {caseStudyUrl && (
@@ -320,7 +320,7 @@ export function ArtifactAtlas() {
               data-sfx="off"
               onClick={() => select(i)}
             >
-              <img src={MODELS[i].image} alt="" decoding="async" />
+              <img src={MODELS[i].image} alt="" decoding="async" loading="lazy" />
               <span className="atlas-tab-text">
                 <span className="atlas-tab-name">{it.short}</span>
                 <span className="atlas-tab-sub">{it.material}</span>
@@ -345,7 +345,7 @@ export function ArtifactAtlas() {
             <span>{a.loading}</span>
           </div>
 
-          {failed && <img className="atlas-fallback" src={MODELS[active].image} alt={a.items[active].name} />}
+          {failed && <img className="atlas-fallback" src={MODELS[active].image} alt={a.items[active].name} decoding="async" />}
 
           <p className={`atlas-hint${hintGone ? ' is-gone' : ''}`} aria-hidden="true">
             <Icon name="hand" size={15} />

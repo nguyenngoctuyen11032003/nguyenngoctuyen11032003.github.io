@@ -13,7 +13,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
 function Badge({ item }: { item: CertificationItem }) {
   if (item.badge) {
-    return <img src={item.badge} alt={item.name} className="cert-badge-img" draggable={false} />;
+    return <img src={item.badge} alt={item.name} className="cert-badge-img" draggable={false} loading="lazy" decoding="async" />;
   }
   // No official artwork: a typographic medal in the same spirit.
   return (

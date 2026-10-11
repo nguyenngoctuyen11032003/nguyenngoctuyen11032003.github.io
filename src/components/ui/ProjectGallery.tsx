@@ -115,6 +115,7 @@ export function ProjectGallery({ images, labels, initialIndex = 0 }: ProjectGall
                   src={thumbOf(image.src)}
                   alt=""
                   loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-top"
                 />
               </button>

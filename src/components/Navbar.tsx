@@ -365,7 +365,7 @@ export function Navbar() {
               <div className="dd-cards">
                 {featured.map((project) => (
                   <a key={project.title} href="#projects" className="dd-card">
-                    <img src={thumbOf(project.images![0].src)} alt="" decoding="async" />
+                    <img src={thumbOf(project.images![0].src)} alt="" decoding="async" loading="lazy" />
                     <em>{project.years} · {project.scope}</em>
                     <strong>{project.title}</strong>
                     <span>{project.tags?.slice(0, 3).join(' · ')}</span>

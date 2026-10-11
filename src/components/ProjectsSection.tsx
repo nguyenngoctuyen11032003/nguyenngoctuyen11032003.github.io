@@ -100,6 +100,7 @@ function FeaturedStage({ project, onOpen }: FeaturedStageProps) {
             src={mediumOf(image.src)}
             alt=""
             loading={i === 0 ? 'eager' : 'lazy'}
+            decoding="async"
             className={`stage-shot ${i === active ? 'is-active' : ''}`}
           />
         ))}
@@ -189,6 +190,7 @@ function BentoCard({ project, span, origin, onOpen }: BentoCardProps) {
                 src={thumbOf(cover.src)}
                 alt=""
                 loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
               />
             ) : (

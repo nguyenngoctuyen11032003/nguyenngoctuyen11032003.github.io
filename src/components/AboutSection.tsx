@@ -380,7 +380,7 @@ export function AboutSection() {
           data-sfx-hover="off"
           onClick={() => travelRef.current()}
         >
-          <img ref={imageRef} src={avatarUrl} alt="Nguyễn Ngọc Tuyền" />
+          <img ref={imageRef} src={avatarUrl} alt="Nguyễn Ngọc Tuyền" decoding="async" />
         </button>
       </div>
 

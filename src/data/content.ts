@@ -211,7 +211,6 @@ export interface Content {
       detailsCta: string;
       openLabel: string;
       webLabel: string;
-      desktopLabel: string;
     };
     items: ProjectItem[];
   };
@@ -544,7 +543,6 @@ export const content: Record<Lang, Content> = {
         detailsCta: 'Xem chi tiết',
         openLabel: 'Mở ứng dụng',
         webLabel: 'Web app',
-        desktopLabel: 'Windows',
       },
       items: [
         {
@@ -1119,7 +1117,6 @@ export const content: Record<Lang, Content> = {
         detailsCta: 'View details',
         openLabel: 'Open app',
         webLabel: 'Web app',
-        desktopLabel: 'Windows',
       },
       items: [
         {

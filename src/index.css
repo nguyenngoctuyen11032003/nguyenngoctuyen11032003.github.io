@@ -1610,7 +1610,8 @@ button:focus-visible {
   transform-origin: 50% 0;
 }
 .vx-canvas > *,
-.vx-stack > * {
+.vx-stack > *,
+.vx-showcase > * {
   position: absolute;
 }
 .vx-stack {
@@ -1894,6 +1895,7 @@ button:focus-visible {
 }
 /* Instance A: details button in the pill */
 .vx-nav .vx-btn {
+  position: absolute;
   left: 530.7px;
   top: 10.5px;
   width: 125.5px;
@@ -1905,6 +1907,7 @@ button:focus-visible {
 }
 /* Instance B: hero CTA, centred on x=586 */
 .vx-cta2 {
+  position: absolute;
   left: 586px;
   top: 336px;
   transform: translateX(-50%);
@@ -2215,7 +2218,7 @@ button:focus-visible {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-@media (max-width: 380px) {
+@media (max-width: 440px) {
   .vx--phone .vx-tab img {
     display: none;
   }

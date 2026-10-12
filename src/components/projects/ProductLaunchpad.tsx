@@ -96,7 +96,7 @@ function Card({ shot, label }: { shot: Shot; label: string }) {
         >
           {String(shot.count).padStart(2, '0')}
         </div>
-        <div className="vx-cv vx-big" style={{ top: 186, fontSize: 9, color: '#fff', whiteSpace: 'normal' }}>
+        <div className="vx-cv vx-big" style={{ top: 188, fontSize: 7.5, lineHeight: 1.2, color: '#fff', whiteSpace: 'normal' }}>
           {label}
         </div>
       </>
@@ -503,7 +503,7 @@ export function ProductLaunchpad({
                 <b>{name}</b> — {product.tagline}
               </span>
               <span>
-                {isDownload ? l.desktopLabel : l.webLabel} · {meta}
+                {isDownload ? meta : `${l.webLabel} · ${meta}`}
               </span>
             </p>
 

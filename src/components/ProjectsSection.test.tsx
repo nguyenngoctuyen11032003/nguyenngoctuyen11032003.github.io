@@ -73,9 +73,9 @@ describe('ProjectsSection', () => {
 
   it('shows the source code link when available', () => {
     setup();
-    fireEvent.click(screen.getByRole('button', { name: /Xem chi tiết Gym Training Plan/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Xem chi tiết Vyora/ }));
     const link = screen.getByRole('link', { name: /Mã nguồn/ });
-    expect(link).toHaveAttribute('href', 'https://github.com/nguyenngoctuyen11032003/gym-for-beginners');
+    expect(link).toHaveAttribute('href', 'https://github.com/nguyenngoctuyen11032003/Vyora');
     expect(link).toHaveAttribute('target', '_blank');
   });
 
@@ -87,10 +87,10 @@ describe('ProjectsSection', () => {
 
   it('links the gym and e-learning projects to their live websites', () => {
     setup();
-    fireEvent.click(screen.getByRole('button', { name: /Xem chi tiết Gym Training Plan/ }));
+    fireEvent.click(screen.getByRole('button', { name: /Xem chi tiết Vyora/ }));
     expect(screen.getByRole('link', { name: /Xem website/ })).toHaveAttribute(
       'href',
-      'https://gym-for-beginners-ten.vercel.app/'
+      'https://nguyenngoctuyen11032003.github.io/Vyora/'
     );
     fireEvent.click(screen.getByRole('button', { name: 'Đóng' }));
     fireEvent.click(screen.getByRole('button', { name: /Xem chi tiết Nền tảng đào tạo/ }));
@@ -102,7 +102,7 @@ describe('ProjectsSection', () => {
 });
 
 describe('product launchpad', () => {
-  it('opens Fitora and Stratos in a new tab from their logos', () => {
+  it('opens Fitora, Stratos and Vyora in a new tab from their logos', () => {
     setup();
     const fitora = screen.getByRole('link', { name: /^Mở ứng dụng Fitora/ });
     expect(fitora).toHaveAttribute('href', 'https://nguyenngoctuyen11032003.github.io/Fitora/#/login');

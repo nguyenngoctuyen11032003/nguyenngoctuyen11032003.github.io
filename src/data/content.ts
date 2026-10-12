@@ -350,8 +350,8 @@ const MECHMAP_TAGS = ['Leaflet', 'OpenStreetMap'];
 const HOTEL_TAGS =['PHP', 'MySQL', 'JavaScript', 'Bootstrap', 'jQuery'];
 const HOTEL_REPO = `${links.github}/hotel-erp`;
 const GYM_TAGS =['Next.js', 'React', 'TypeScript', 'Tailwind CSS'];
-const GYM_REPO = `${links.github}/gym-for-beginners`;
-const GYM_URL = 'https://gym-for-beginners-ten.vercel.app/';
+const GYM_REPO = `${links.github}/Vyora`;
+const GYM_URL = 'https://nguyenngoctuyen11032003.github.io/Vyora/';
 const ELEARNING_URL = 'https://elearning-platform-neon.vercel.app/';
 const CRM_TAGS = ['NestJS', 'Next.js', 'PostgreSQL', 'Redis', 'Docker'];
 const FITORA_TAGS = ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL'];
@@ -580,7 +580,7 @@ export const content: Record<Lang, Content> = {
           tags: FITORA_TAGS,
           liveUrl: FITORA_URL,
           logo: '/products/fitora.webp',
-          accent: '#22d3ee',
+          accent: '#2dd4bf',
           tagline: 'Chụp món ăn, AI tính calo & macro',
         },
         {
@@ -651,7 +651,7 @@ export const content: Record<Lang, Content> = {
           ],
         },
         {
-          title: 'Gym Training Plan — Giáo án tập 12 tuần',
+          title: 'Vyora — Giáo án tập gym 12 tuần',
           years: '2026',
           role: 'Full-Stack Developer',
           scope: 'Cá nhân',
@@ -666,6 +666,9 @@ export const content: Record<Lang, Content> = {
           tags: GYM_TAGS,
           liveUrl: GYM_URL,
           repoUrl: GYM_REPO,
+          logo: '/products/vyora.webp',
+          accent: '#6366f1',
+          tagline: 'Giáo án tập gym, bấm giờ và tính kcal',
           images: [
             img('gym-1.png', 'Trang lịch tập trong tuần với bộ chọn ngày và thời gian nghỉ'),
             img('gym-2.png', 'Danh sách bài tập của buổi Lưng, Xô và Tay trước với số set, số rep'),
@@ -1146,7 +1149,7 @@ export const content: Record<Lang, Content> = {
           tags: FITORA_TAGS,
           liveUrl: FITORA_URL,
           logo: '/products/fitora.webp',
-          accent: '#22d3ee',
+          accent: '#2dd4bf',
           tagline: 'Snap a meal, AI counts calories & macros',
         },
         {
@@ -1217,7 +1220,7 @@ export const content: Record<Lang, Content> = {
           ],
         },
         {
-          title: 'Gym Training Plan — 12-Week Program',
+          title: 'Vyora — 12-Week Gym Program',
           years: '2026',
           role: 'Full-Stack Developer',
           scope: 'Personal',
@@ -1232,6 +1235,9 @@ export const content: Record<Lang, Content> = {
           tags: GYM_TAGS,
           liveUrl: GYM_URL,
           repoUrl: GYM_REPO,
+          logo: '/products/vyora.webp',
+          accent: '#6366f1',
+          tagline: 'Gym plans, workout timer and kcal',
           images: [
             img('gym-1.png', 'Weekly schedule page with day selector and rest times'),
             img('gym-2.png', 'Back, lats and biceps session with sets and reps per exercise'),

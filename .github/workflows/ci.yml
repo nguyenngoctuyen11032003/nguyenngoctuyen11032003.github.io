@@ -1,6 +1,6 @@
-# Checks every push and pull request. Deployment is handled by the Vercel GitHub app:
-# pushes to main go to production, other branches and PRs get preview URLs.
-name: CI
+# Checks every push and pull request; pushes to main are then deployed to GitHub Pages
+# (https://nguyenngoctuyen11032003.github.io/). A failing check never reaches production.
+name: CI/CD
 
 on:
   push:
@@ -10,7 +10,8 @@ on:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # Never cut a production deploy off halfway; superseded PR runs can go.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -45,8 +46,21 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-pages-artifact@v4
         with:
-          name: dist
           path: dist
-          retention-days: 7
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

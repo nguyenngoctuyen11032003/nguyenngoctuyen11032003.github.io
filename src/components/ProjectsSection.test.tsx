@@ -40,7 +40,7 @@ describe('ProjectsSection', () => {
 
   it('localizes detail button labels', () => {
     setup();
-    const buttons = screen.getAllByRole('button', { name: /^Xem chi tiết/ });
+    const buttons = screen.getAllByRole('button', { name: /^Xem chi tiết \S/ });
     expect(buttons).toHaveLength(11);
   });
 
@@ -102,15 +102,30 @@ describe('ProjectsSection', () => {
 });
 
 describe('product launchpad', () => {
-  it('opens Fitora, Stratos and Vyora in a new tab from their logos', () => {
+  const switcher = () => screen.getByRole('tablist', { name: 'Chọn sản phẩm' });
+
+  it('switches between the four products', () => {
     setup();
-    const fitora = screen.getByRole('link', { name: /^Mở ứng dụng Fitora/ });
-    expect(fitora).toHaveAttribute('href', 'https://nguyenngoctuyen11032003.github.io/Fitora/#/login');
-    expect(fitora).toHaveAttribute('target', '_blank');
-    expect(fitora.getAttribute('rel')).toContain('noopener');
-    expect(fitora.querySelector('img')).toHaveAttribute('src', '/products/fitora.webp');
-    const stratos = screen.getByRole('link', { name: /^Mở ứng dụng Stratos/ });
-    expect(stratos).toHaveAttribute('href', 'https://nguyenngoctuyen11032003.github.io/Note_mytasks/');
+    const tabs = within(switcher()).getAllByRole('tab');
+    expect(tabs.map((t) => t.textContent)).toEqual(['FoFreeXit', 'Fitora', 'Stratos', 'Vyora']);
+    expect(tabs[0]).toHaveAttribute('aria-selected', 'true');
+    expect(tabs[0].querySelector('img')).toHaveAttribute('src', '/products/fofreexit.webp');
+  });
+
+  it('opens Fitora, Stratos and Vyora in a new tab', () => {
+    setup();
+    const cases = [
+      ['Fitora', 'https://nguyenngoctuyen11032003.github.io/Fitora/#/login'],
+      ['Stratos', 'https://nguyenngoctuyen11032003.github.io/Note_mytasks/'],
+      ['Vyora', 'https://nguyenngoctuyen11032003.github.io/Vyora/'],
+    ];
+    for (const [name, href] of cases) {
+      fireEvent.click(within(switcher()).getByRole('tab', { name }));
+      const link = screen.getByRole('link', { name: new RegExp(`^Mở ứng dụng ${name}`) });
+      expect(link).toHaveAttribute('href', href);
+      expect(link).toHaveAttribute('target', '_blank');
+      expect(link.getAttribute('rel')).toContain('noopener');
+    }
   });
 
   it('downloads the FoFreeXit installer', () => {
@@ -119,6 +134,22 @@ describe('product launchpad', () => {
     expect(link).toHaveAttribute('href', '/downloads/FoFreeXit-Setup-0.1.0.exe');
     expect(link).toHaveAttribute('download');
     expect(link).not.toHaveAttribute('target');
+  });
+
+  it('moves between products with the arrow keys', () => {
+    setup();
+    const tabs = within(switcher()).getAllByRole('tab');
+    fireEvent.keyDown(tabs[0], { key: 'ArrowLeft' });
+    expect(tabs[3]).toHaveAttribute('aria-selected', 'true');
+    expect(tabs[3]).toHaveFocus();
+  });
+
+  it('opens the details of the selected product', () => {
+    setup();
+    fireEvent.click(within(switcher()).getByRole('tab', { name: 'Stratos' }));
+    fireEvent.click(screen.getAllByRole('button', { name: 'Xem chi tiết' })[0]);
+    const dialog = screen.getByRole('dialog');
+    expect(within(dialog).getByRole('heading', { name: /^Stratos/ })).toBeInTheDocument();
   });
 
   it('offers the installer in the FoFreeXit details', () => {

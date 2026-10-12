@@ -1565,288 +1565,768 @@ button:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
-   Product launchpad (projects/ProductLaunchpad.tsx): app icons that open the
-   live product or download its installer. Each card glows in its brand colour
-   (--accent), follows the pointer with a spotlight and tilts its icon.
+   Product launchpad (projects/ProductLaunchpad.tsx). A fixed 1172 x 760 design
+   canvas, every element absolutely placed in design px and the whole canvas
+   scaled by one transform (--k). A starfield, a pill that switches product, a
+   glass badge, the heading, a glow CTA, then the payoff: a 3D ring of cards
+   seen from its centre with a browser frame painted IN FRONT of its lower
+   third, showing the live product. Phones (<=700px) get a real flow column.
    ------------------------------------------------------------------------ */
-.launch {
-  margin-bottom: clamp(20px, 3vw, 28px);
-}
-.launch-head {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 22px;
-}
-.launch-heading {
-  font-family: var(--font-display);
-  font-weight: var(--weight-regular);
-  font-size: var(--text-2xl);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-heading);
+.vx {
+  position: relative;
+  width: 100vw;
+  margin: 0 0 4.5rem calc(50% - 50vw);
+  font-family: Poppins, Inter, system-ui, sans-serif;
   color: #fff;
+  -webkit-font-smoothing: antialiased;
 }
-.launch-pulse {
+.vx a {
+  text-decoration: none;
+  color: inherit;
+}
+.vx-stage {
   position: relative;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 12px #34d399;
-}
-.launch-pulse::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1px solid #34d399;
-  animation: launch-ping 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-.launch-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: clamp(14px, 2vw, 22px);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.launch-list > li {
-  display: flex;
-}
-.launch-card {
-  --mx: 50%;
-  --my: 30%;
-  --tx: 0;
-  --ty: 0;
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-  min-height: 360px;
-  padding: 20px 22px 22px;
+  height: var(--h, 760px);
   overflow: hidden;
-  border-radius: 26px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #020204;
+  /* fade into the black section above and below */
+  mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 100%);
+}
+.vx-bg {
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
-    linear-gradient(180deg, #0d0d10, #070708);
+    linear-gradient(180deg, rgba(25, 127, 255, 0) 38%, rgba(25, 127, 255, 0.042) 54%,
+      rgba(25, 127, 255, 0.052) 68%, rgba(25, 127, 255, 0.03) 100%),
+    #020204;
+}
+.vx-canvas {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1172px;
+  height: 760px;
+  transform: translateX(-50%) scale(var(--k, 1));
+  transform-origin: 50% 0;
+}
+.vx-canvas > *,
+.vx-stack > * {
+  position: absolute;
+}
+.vx-stack {
+  inset: 0;
+  z-index: 300;
+}
+.vx-stars {
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* ---- Nav pill: product switcher ---------------------------------------- */
+.vx-nav {
+  left: 247px;
+  top: 3px;
+  width: 678px;
+  height: 64px;
+  border-radius: 32px;
+  z-index: 400;
+  background: rgba(255, 255, 255, 0.008);
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+.vx-nav > * {
+  position: absolute;
+}
+.vx-mark {
+  left: 21px;
+  top: 19px;
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 0 6px rgba(60, 224, 255, 0.75));
+}
+.vx-wm {
+  left: 50px;
+  top: 0;
+  white-space: nowrap;
+}
+.vx-kick {
+  position: absolute;
+  left: 3px;
+  top: 20px;
+  font-size: 4.4px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   color: #fff;
-  transition:
-    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1),
-    border-color 0.4s ease,
-    box-shadow 0.5s ease;
+  opacity: 0.92;
+  line-height: 1;
 }
-/* Gradient hairline that lights up in the brand colour. */
-.launch-card::before {
-  content: '';
+.vx-name {
   position: absolute;
-  inset: 0;
-  z-index: 2;
-  padding: 1px;
-  border-radius: inherit;
-  background: linear-gradient(
-    140deg,
-    color-mix(in srgb, var(--accent) 90%, #fff),
-    transparent 40%,
-    transparent 60%,
-    color-mix(in srgb, var(--accent) 70%, transparent)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.25;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+  left: 0;
+  top: 26px;
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: #fff;
 }
-.launch-card:hover,
-.launch-card:focus-visible {
-  transform: translateY(-6px);
-  border-color: transparent;
-  box-shadow:
-    0 30px 60px -30px color-mix(in srgb, var(--accent) 70%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
-}
-.launch-card:hover::before,
-.launch-card:focus-visible::before {
-  opacity: 1;
-}
-.launch-spot {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    320px circle at var(--mx) var(--my),
-    color-mix(in srgb, var(--accent) 22%, transparent),
-    transparent 65%
-  );
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.launch-card:hover .launch-spot {
-  opacity: 1;
-}
-.launch-grid {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 70% 55% at 50% 38%, #000, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 38%, #000, transparent 75%);
-}
-.launch-top {
+.vx-links {
+  left: 156px;
+  top: 0;
+  height: 62px;
   display: flex;
-  width: 100%;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
 }
-.launch-chip {
-  display: inline-flex;
+.vx-tab {
+  position: relative;
+  display: flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 11px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: rgba(244, 241, 234, 0.75);
+  height: 34px;
+  padding: 0 12px 0 8px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.25s, background 0.25s;
 }
-.launch-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent);
+.vx-tab img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+  transition: opacity 0.25s;
 }
-.launch-index {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-label);
-  color: rgba(244, 241, 234, 0.3);
+.vx-tab:hover {
+  color: rgba(255, 255, 255, 0.92);
 }
-.launch-icon {
-  position: relative;
+.vx-tab[aria-selected='true'] {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+.vx-tab[aria-selected='true'] img,
+.vx-tab:hover img {
+  opacity: 1;
+}
+.vx-tab:focus-visible,
+.vx-btn:focus-visible {
+  outline: 2px solid rgba(120, 225, 255, 0.7);
+  outline-offset: 2px;
+}
+
+/* ---- PIXEL CONTRACT A: the badge ---------------------------------------- */
+.vx-badge {
+  left: 462px;
+  top: 95px;
+  width: 250px;
+  height: 39px;
+  border-radius: 12px;
+  z-index: 300;
+  border: 1px solid rgba(255, 255, 255, 0.115);
+  background: linear-gradient(to top,
+    rgba(190, 225, 255, 0.175) 0px, rgba(190, 225, 255, 0.128) 2px, rgba(190, 225, 255, 0.075) 4px,
+    rgba(190, 225, 255, 0.026) 6px, rgba(255, 255, 255, 0.012) 9px, rgba(255, 255, 255, 0.012) 100%);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+.vx-badge i {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 29px;
+  height: 29px;
+  border-radius: 8px;
   display: grid;
   place-items: center;
-  align-self: center;
-  width: 150px;
-  height: 150px;
-  margin: 18px 0 20px;
-  transform: perspective(600px) rotateX(calc(var(--ty) * -14deg)) rotateY(calc(var(--tx) * 18deg));
-  transition: transform 0.25s ease-out;
+  background: linear-gradient(to top,
+    #46afc8 0px, #35abc7 2px, #0b859d 4px, #026c84 6px, #004e66 8px,
+    #053f58 10px, #012c3d 12px, #031a2a 14px, #061125 16px, #090f25 19px,
+    #090c1c 23px, #060d16 29px);
+  box-shadow: inset 1px 0 0 rgba(150, 220, 250, 0.4),
+    inset -1px 0 0 rgba(150, 220, 250, 0.52),
+    0 0 6px rgba(60, 190, 230, 0.2), 0 3px 8px -5px rgba(90, 220, 255, 0.6);
 }
-.launch-halo {
-  position: absolute;
-  inset: 8%;
-  border-radius: 50%;
-  background: var(--accent);
-  filter: blur(38px);
-  opacity: 0.35;
-  transition: opacity 0.5s ease, transform 0.6s ease;
-}
-.launch-ring {
-  position: absolute;
-  inset: -2px;
-  border-radius: 50%;
-  padding: 1px;
-  background: conic-gradient(from 0deg, transparent 0 60%, var(--accent) 80%, #fff 88%, transparent 92%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.55;
-  animation: launch-spin 7s linear infinite;
-}
-.launch-icon img {
+.vx-badge i svg {
+  width: 14px;
+  height: 16px;
   position: relative;
-  width: 116px;
-  height: 116px;
-  object-fit: contain;
-  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.55));
-  animation: launch-float 5s ease-in-out infinite;
-  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  top: -1px;
+  left: 0;
 }
-.launch-list > li:nth-child(2) .launch-icon img {
-  animation-delay: -1.6s;
-}
-.launch-list > li:nth-child(3) .launch-icon img {
-  animation-delay: -3.2s;
-}
-.launch-card:hover .launch-icon img {
-  transform: scale(1.12);
-}
-.launch-card:hover .launch-halo {
-  opacity: 0.7;
-  transform: scale(1.15);
-}
-.launch-card:hover .launch-ring {
-  opacity: 1;
-  animation-duration: 2.4s;
-}
-.launch-name {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  line-height: var(--leading-snug);
-  letter-spacing: var(--tracking-heading);
-}
-.launch-tagline {
-  margin-top: 6px;
-  font-size: var(--text-sm);
-  line-height: var(--leading-normal);
-  color: rgba(244, 241, 234, 0.62);
-}
-.launch-foot {
+.vx-badge b {
+  position: absolute;
+  left: 45px;
+  transform-origin: 0 50%;
+  transform: translate(2px, -1px);
+  top: 0;
+  height: 39px;
   display: flex;
-  flex-wrap: wrap;
-  width: 100%;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 18px;
-}
-.launch-meta {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.94);
   white-space: nowrap;
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  color: rgba(244, 241, 234, 0.42);
+  padding-top: 1.5px;
 }
-.launch-cta {
-  display: inline-flex;
+
+/* ---- Hero type ----------------------------------------------------------- */
+.vx-h1 {
+  left: 586px;
+  top: 150px;
+  transform: translateX(-50%);
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: 54px;
+  line-height: 1.04;
+  letter-spacing: -0.004em;
+  word-spacing: 0.175em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 34px rgba(130, 180, 255, 0.22);
+  z-index: 300;
+}
+.vx-h1 > span {
+  display: block;
+}
+.vx-sub {
+  left: 586px;
+  top: 285px;
+  transform: translateX(-50%);
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 13.2px;
+  line-height: 18px;
+  color: #a9aeb5;
+  z-index: 300;
+}
+.vx-sub > span {
+  display: block;
+}
+.vx-sub b {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* ---- PIXEL CONTRACT B: the glow button, used twice ---------------------- */
+.vx-btn {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  background: linear-gradient(to top,
+    #9ad9ec 1px, #89dff0 2px, #79e0f1 3px, #61daef 4px, #3ec8e4 5px,
+    #14a8c6 6px, #0596b3 7px, #038aa8 8px, #047796 9px, #006180 10px,
+    #025066 12px, #0a4f5e 13px, #04465a 14px, #073746 16px,
+    #0a2a37 18px, #0d212e 20px, #0f1824 24px, #0a121e 30px,
+    #0a111d 34px, #0a111d 100%);
+  box-shadow:
+    inset 0 3px 3px -2px rgba(180, 228, 255, 0.1),
+    inset 1px 0 0 rgba(255, 255, 255, 0.09),
+    inset -1px 0 0 rgba(255, 255, 255, 0.09),
+    var(--hair, 0 1px 0 rgba(152, 218, 234, 0.38)),
+    1px 0 0 rgba(152, 218, 234, 0.17), -1px 0 0 rgba(152, 218, 234, 0.17),
+    0 0 8px rgba(60, 190, 235, 0.1),
+    0 2px 5px -3px rgba(90, 220, 255, 0.45);
+  transition: translate 0.25s, box-shadow 0.25s, filter 0.25s;
+}
+.vx-btn::before {
+  content: '';
+  position: absolute;
+  left: 22%;
+  right: 38%;
+  top: 0.8px;
+  height: 1.9px;
+  z-index: 1;
+  filter: blur(0.55px);
+  background: linear-gradient(90deg, rgba(120, 225, 255, 0) 0%, rgba(120, 225, 255, 0.58) 34%,
+    rgba(160, 240, 255, 0.74) 50%, rgba(120, 225, 255, 0.58) 66%, rgba(120, 225, 255, 0) 100%);
+}
+.vx-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(200, 245, 255, 0.7), rgba(200, 245, 255, 0) 13px),
+    linear-gradient(270deg, rgba(200, 245, 255, 0.7), rgba(200, 245, 255, 0) 13px);
+  -webkit-mask: linear-gradient(to top, #000 0, #000 6px, rgba(0, 0, 0, 0.4) 12px,
+    rgba(0, 0, 0, 0.15) 18px, rgba(0, 0, 0, 0.09) 24px, rgba(0, 0, 0, 0.02) 30px, rgba(0, 0, 0, 0.02) 100%);
+  mask: linear-gradient(to top, #000 0, #000 6px, rgba(0, 0, 0, 0.4) 12px,
+    rgba(0, 0, 0, 0.15) 18px, rgba(0, 0, 0, 0.09) 24px, rgba(0, 0, 0, 0.02) 30px, rgba(0, 0, 0, 0.02) 100%);
+}
+.vx-btn span {
+  position: relative;
+  z-index: 2;
+  display: flex;
   align-items: center;
   gap: 7px;
-  min-height: 40px;
-  padding: 0 1.1rem;
-  border-radius: 999px;
-  background: #f4f1ea;
-  color: #050505;
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 20, 30, 0.5);
+}
+.vx-btn:hover {
+  translate: 0 -1px;
+  filter: brightness(1.12);
+  box-shadow: inset 0 1px 0 rgba(200, 245, 255, 0.6), inset 1px 0 0 rgba(170, 225, 255, 0.35),
+    inset -1px 0 0 rgba(170, 225, 255, 0.35), 0 6px 22px rgba(20, 180, 225, 0.55);
+}
+/* Instance A: details button in the pill */
+.vx-nav .vx-btn {
+  left: 530.7px;
+  top: 10.5px;
+  width: 125.5px;
+  height: 39.5px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+/* Instance B: hero CTA, centred on x=586 */
+.vx-cta2 {
+  left: 586px;
+  top: 336px;
+  transform: translateX(-50%);
+  min-width: 121px;
+  height: 54.5px;
+  padding: 0 24px;
+  --hair: 0 0 0 transparent;
+  border-radius: 13px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   white-space: nowrap;
-  transition: background 0.3s ease, box-shadow 0.4s ease;
+  z-index: 300;
 }
-.launch-card:hover .launch-cta {
-  background: #fff;
-  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 60%, transparent);
+.vx-cta2::before {
+  display: none;
 }
-.launch-cta svg {
-  transition: transform 0.35s ease;
+.vx-more {
+  display: none;
 }
-.launch-card:hover .launch-cta svg {
-  transform: translate(2px, -2px);
+
+/* ---- The ring: 3D cylinder seen from its centre ------------------------- */
+.vx-showcase {
+  left: 0;
+  top: 0;
+  width: 1172px;
+  height: 0;
 }
-.launch-card[download]:hover .launch-cta svg {
-  transform: translateY(2px);
+.vx-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1172px;
+  height: 657px;
+  z-index: 5;
+  perspective: 891px;
+  perspective-origin: 586px 918px;
+  transform-style: preserve-3d;
+  pointer-events: none;
 }
+.vx-card {
+  position: absolute;
+  left: 586px;
+  top: 616px;
+  width: 130px;
+  height: 300px;
+  margin: -150px 0 0 -65px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0d1117;
+  box-shadow: 0 24px 46px rgba(0, 0, 0, 0.6), 0 3px 8px rgba(0, 0, 0, 0.5);
+  backface-visibility: hidden;
+  will-change: transform;
+  visibility: hidden;
+}
+.vx-card > * {
+  position: absolute;
+}
+.vx-card img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.vx-card.broken img {
+  display: none;
+}
+.vx-edge {
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15), inset 0 16px 30px rgba(255, 255, 255, 0.05);
+}
+.vx-fill {
+  inset: 0;
+}
+.vx-cv {
+  left: 0;
+  right: 0;
+  padding: 0 10px;
+}
+.vx-big {
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.96;
+  letter-spacing: -0.015em;
+  white-space: nowrap;
+}
+/* logo card */
+.vx-card--logo {
+  background:
+    radial-gradient(70% 40% at 50% 34%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 75%),
+    linear-gradient(168deg, color-mix(in srgb, var(--accent) 45%, #05070d) 0%, #070a12 62%, #05060a 100%);
+}
+.vx-card--logo img.vx-logo {
+  left: 25px;
+  top: 52px;
+  width: 80px;
+  height: 80px;
+  inset: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px color-mix(in srgb, var(--accent) 60%, transparent));
+}
+.vx-card--logo .vx-k {
+  top: 20px;
+  font-size: 4.4px;
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.7);
+}
+/* screenshot card */
+.vx-card--shot .vx-fill {
+  background: linear-gradient(180deg, rgba(4, 8, 16, 0) 38%, rgba(4, 8, 16, 0.85) 72%);
+}
+/* stat card */
+.vx-card--stat {
+  background: linear-gradient(180deg, #071426, #030914 70%);
+}
+
+/* ---- Browser frame, in FRONT of the ring -------------------------------- */
+.vx-browser {
+  left: 165px;
+  top: 558px;
+  width: 842px;
+  height: 202px;
+  border-radius: 28px 28px 0 0;
+  overflow: hidden;
+  z-index: 100;
+  box-shadow: 0 -14px 44px rgba(0, 0, 0, 0.55);
+}
+.vx-browser::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 42px;
+  bottom: 0;
+  background: rgba(20, 20, 26, 0.82);
+}
+.vx-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 42px;
+  background: linear-gradient(180deg, rgba(20, 24, 48, 0.48), rgba(15, 19, 38, 0.58));
+  -webkit-backdrop-filter: blur(6px) saturate(112%);
+  backdrop-filter: blur(6px) saturate(112%);
+}
+.vx-dots {
+  position: absolute;
+  left: 27px;
+  top: 16px;
+  display: flex;
+  gap: 2.6px;
+}
+.vx-dots i {
+  width: 7.6px;
+  height: 7.6px;
+  border-radius: 50%;
+}
+.vx-omni {
+  position: absolute;
+  left: 246px;
+  top: 7px;
+  width: 336px;
+  height: 26px;
+  border-radius: 5px;
+  background: rgba(9, 13, 26, 0.93);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.vx-omni svg {
+  width: 9px;
+  height: 9px;
+  opacity: 0.72;
+  flex: none;
+}
+.vx-omni span {
+  font-size: 9.5px;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.vx-tools {
+  position: absolute;
+  right: 27px;
+  top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0.9;
+}
+.vx-tools svg {
+  width: 11px;
+  height: 12px;
+}
+.vx-page {
+  position: absolute;
+  left: 7px;
+  right: 6px;
+  top: 42px;
+  bottom: 0;
+  background: #0b0d12;
+  overflow: hidden;
+  border-radius: 10px 10px 0 0;
+}
+.vx-page img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.6s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.vx-page img.on {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Entrance: resting states before the timeline runs ------------------ */
+.vx[data-intro='pre'] :is(.vx-nav, .vx-mark, .vx-wm, .vx-tab, .vx-nav .vx-btn, .vx-badge, .vx-h1 > span,
+  .vx-sub > span, .vx-cta2, .vx-more, .vx-ring, .vx-browser) {
+  opacity: 0;
+}
+
+/* ---- Tablet: the design window narrows so type stops shrinking ---------- */
+@media (max-width: 1080px) {
+  .vx-nav {
+    left: 266px;
+    width: 640px;
+  }
+  .vx-nav .vx-btn {
+    left: 500px;
+  }
+  .vx-wm {
+    display: none;
+  }
+  .vx-links {
+    left: 52px;
+  }
+}
+
+/* ---- Phone: a genuine flow column --------------------------------------- */
+.vx--phone .vx-stage {
+  height: auto;
+}
+.vx--phone .vx-canvas {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 20px 0;
+}
+.vx--phone .vx-canvas > * {
+  position: static;
+}
+.vx--phone .vx-stars {
+  position: absolute;
+}
+.vx--phone .vx-stack {
+  display: contents;
+}
+.vx--phone .vx-stack > * {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+}
+.vx--phone .vx-nav {
+  order: 1;
+  width: 100%;
+  max-width: 440px;
+  height: 52px;
+  border-radius: 26px;
+}
+.vx--phone .vx-mark,
+.vx--phone .vx-wm,
+.vx--phone .vx-nav .vx-btn {
+  display: none;
+}
+.vx--phone .vx-links {
+  position: absolute;
+  inset: 0 6px;
+  height: auto;
+  justify-content: space-between;
+  gap: 2px;
+}
+.vx--phone .vx-tab {
+  flex: 1 1 0;
+  justify-content: center;
+  min-width: 0;
+  height: 40px;
+  padding: 0 6px;
+  font-size: 12px;
+}
+.vx--phone .vx-tab span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 380px) {
+  .vx--phone .vx-tab img {
+    display: none;
+  }
+}
+.vx--phone .vx-badge {
+  order: 2;
+  margin-top: 22px;
+  width: auto;
+  max-width: 100%;
+  height: 36px;
+  border-radius: 18px;
+}
+.vx--phone .vx-badge b {
+  position: relative;
+  left: auto;
+  transform: none;
+  height: 36px;
+  padding: 0 15px 0 42px;
+  font-size: 12.5px;
+}
+.vx--phone .vx-badge i {
+  top: 3px;
+  left: 4px;
+  width: 28px;
+  height: 28px;
+}
+.vx--phone .vx-h1 {
+  order: 3;
+  margin-top: 16px;
+  white-space: normal;
+  font-size: clamp(30px, 9vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+.vx--phone .vx-sub {
+  order: 4;
+  margin-top: 12px;
+  white-space: normal;
+  font-size: clamp(14px, 3.9vw, 15.5px);
+  line-height: 1.5;
+  max-width: 340px;
+}
+.vx--phone .vx-cta2 {
+  order: 5;
+  margin-top: 20px;
+  min-width: 170px;
+  height: 52px;
+  font-size: 16px;
+}
+.vx--phone .vx-more {
+  order: 6;
+  display: inline-flex;
+  margin-top: 12px;
+  border: 0;
+  background: none;
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.vx--phone .vx-showcase {
+  order: 7;
+  position: relative;
+  width: calc(100% + 40px);
+  height: 430px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.vx--phone .vx-ring {
+  left: 50%;
+  margin-left: -586px;
+  top: -446px;
+  transform-origin: 586px 466px;
+  transform: scale(1.02);
+}
+.vx--phone .vx-browser {
+  left: 0;
+  right: 0;
+  top: 212px;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  border-radius: 22px 22px 0 0;
+}
+.vx--phone .vx-bar {
+  height: 36px;
+}
+.vx--phone .vx-omni {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 58%;
+  height: 24px;
+  top: 6px;
+}
+.vx--phone .vx-omni span {
+  font-size: 9px;
+}
+.vx--phone .vx-dots {
+  top: 14px;
+  left: 18px;
+}
+.vx--phone .vx-tools {
+  display: none;
+}
+.vx--phone .vx-page {
+  top: 36px;
+}
+
 @keyframes launch-float {
   0%,
   100% {
@@ -1856,26 +2336,12 @@ button:focus-visible {
     translate: 0 -9px;
   }
 }
-@keyframes launch-spin {
-  to {
-    rotate: 360deg;
-  }
-}
-@keyframes launch-ping {
-  75%,
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .launch-icon img,
-  .launch-ring,
-  .launch-pulse::after,
   .bento-logo img {
     animation: none;
   }
-  .launch-icon {
+  .vx-page img {
+    transition: opacity 0.3s;
     transform: none;
   }
 }

@@ -45,6 +45,8 @@ export interface ProjectItem {
   accent?: string;
   /** One-line pitch under the product name on the launchpad. */
   tagline?: string;
+  /** Screenshot of the running product, shown in the launchpad's browser frame. */
+  preview?: string;
   /** Desktop installer offered for download. */
   download?: { href: string; meta: string };
 }
@@ -199,9 +201,14 @@ export interface Content {
     downloadLabel: string;
     /** Strip of products people can open or install right away. */
     launchpad: {
+      /** Short line in the badge above the heading. */
       eyebrow: string;
       heading: string;
-      intro: string;
+      /** The heading as it is set: two uppercase lines. */
+      headingLines: [string, string];
+      /** Accessible name of the product switcher. */
+      switcherLabel: string;
+      detailsCta: string;
       openLabel: string;
       webLabel: string;
       desktopLabel: string;
@@ -530,9 +537,11 @@ export const content: Record<Lang, Content> = {
       showImage: 'Xem ảnh',
       downloadLabel: 'Tải bộ cài',
       launchpad: {
-        eyebrow: 'Dùng thử ngay',
+        eyebrow: 'Tự làm từ A–Z · dùng thử ngay',
         heading: 'Sản phẩm đang chạy',
-        intro: 'Ba sản phẩm cá nhân tôi tự làm từ đầu đến cuối — mở trên web hoặc cài thẳng về máy.',
+        headingLines: ['Sản phẩm', 'đang chạy'],
+        switcherLabel: 'Chọn sản phẩm',
+        detailsCta: 'Xem chi tiết',
         openLabel: 'Mở ứng dụng',
         webLabel: 'Web app',
         desktopLabel: 'Windows',
@@ -554,6 +563,7 @@ export const content: Record<Lang, Content> = {
           ],
           tags: FOFREEXIT_TAGS,
           logo: '/products/fofreexit.webp',
+          preview: '/projects/medium/fofreexit-1.webp',
           accent: '#3b82f6',
           tagline: 'Sửa PDF như Word, miễn phí',
           download: { href: FOFREEXIT_DOWNLOAD, meta: 'Windows 10/11 · v0.1.0 · 13,8 MB' },
@@ -580,6 +590,7 @@ export const content: Record<Lang, Content> = {
           tags: FITORA_TAGS,
           liveUrl: FITORA_URL,
           logo: '/products/fitora.webp',
+          preview: '/products/shots/fitora.webp',
           accent: '#2dd4bf',
           tagline: 'Chụp món ăn, AI tính calo & macro',
         },
@@ -599,6 +610,7 @@ export const content: Record<Lang, Content> = {
           tags: STRATOS_TAGS,
           liveUrl: STRATOS_URL,
           logo: '/products/stratos.webp',
+          preview: '/products/shots/stratos.webp',
           accent: '#8b5cf6',
           tagline: 'Ghi chú, công việc, chi tiêu — một nơi',
         },
@@ -667,6 +679,7 @@ export const content: Record<Lang, Content> = {
           liveUrl: GYM_URL,
           repoUrl: GYM_REPO,
           logo: '/products/vyora.webp',
+          preview: '/products/shots/vyora.webp',
           accent: '#6366f1',
           tagline: 'Giáo án tập gym, bấm giờ và tính kcal',
           images: [
@@ -1099,9 +1112,11 @@ export const content: Record<Lang, Content> = {
       showImage: 'Show image',
       downloadLabel: 'Download installer',
       launchpad: {
-        eyebrow: 'Try them now',
+        eyebrow: 'Built end to end · try them now',
         heading: 'Products in the wild',
-        intro: 'Three personal products I built end to end — open them on the web or install one on your machine.',
+        headingLines: ['Products', 'in the wild'],
+        switcherLabel: 'Choose a product',
+        detailsCta: 'View details',
         openLabel: 'Open app',
         webLabel: 'Web app',
         desktopLabel: 'Windows',
@@ -1123,6 +1138,7 @@ export const content: Record<Lang, Content> = {
           ],
           tags: FOFREEXIT_TAGS,
           logo: '/products/fofreexit.webp',
+          preview: '/projects/medium/fofreexit-1.webp',
           accent: '#3b82f6',
           tagline: 'Edit PDFs like Word, for free',
           download: { href: FOFREEXIT_DOWNLOAD, meta: 'Windows 10/11 · v0.1.0 · 13.8 MB' },
@@ -1149,6 +1165,7 @@ export const content: Record<Lang, Content> = {
           tags: FITORA_TAGS,
           liveUrl: FITORA_URL,
           logo: '/products/fitora.webp',
+          preview: '/products/shots/fitora.webp',
           accent: '#2dd4bf',
           tagline: 'Snap a meal, AI counts calories & macros',
         },
@@ -1168,6 +1185,7 @@ export const content: Record<Lang, Content> = {
           tags: STRATOS_TAGS,
           liveUrl: STRATOS_URL,
           logo: '/products/stratos.webp',
+          preview: '/products/shots/stratos.webp',
           accent: '#8b5cf6',
           tagline: 'Notes, tasks and spending in one place',
         },
@@ -1236,6 +1254,7 @@ export const content: Record<Lang, Content> = {
           liveUrl: GYM_URL,
           repoUrl: GYM_REPO,
           logo: '/products/vyora.webp',
+          preview: '/products/shots/vyora.webp',
           accent: '#6366f1',
           tagline: 'Gym plans, workout timer and kcal',
           images: [

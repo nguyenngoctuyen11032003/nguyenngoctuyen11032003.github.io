@@ -289,7 +289,7 @@ export function ProjectsSection() {
           </a>
         </motion.header>
 
-        <ProductLaunchpad items={t.projects.items} />
+        <ProductLaunchpad items={t.projects.items} onDetails={(project) => setOpen({ project, image: 0 })} />
 
         {lead && (
           <motion.div

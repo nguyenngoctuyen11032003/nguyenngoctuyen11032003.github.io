@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { LangProvider } from '../context/LangContext';
 import { ProjectsSection, bentoOrigins, bentoSpans, yearSpan } from './ProjectsSection';
 import { content } from '../data/content';
@@ -14,12 +14,12 @@ function setup() {
 }
 
 describe('ProjectsSection', () => {
-  it('renders all 9 project cards', () => {
+  it('renders all 11 project cards', () => {
     setup();
     for (const p of content.vi.projects.items) {
       expect(screen.getByRole('heading', { name: p.title })).toBeInTheDocument();
     }
-    expect(screen.getAllByText(/2026|2025|2024/).length).toBeGreaterThanOrEqual(9);
+    expect(screen.getAllByText(/2026|2025|2024/).length).toBeGreaterThanOrEqual(11);
   });
 
   it('renders every project description', () => {
@@ -41,7 +41,7 @@ describe('ProjectsSection', () => {
   it('localizes detail button labels', () => {
     setup();
     const buttons = screen.getAllByRole('button', { name: /^Xem chi tiết/ });
-    expect(buttons).toHaveLength(9);
+    expect(buttons).toHaveLength(11);
   });
 
   it('shows case study link in modal when available', () => {
@@ -98,6 +98,36 @@ describe('ProjectsSection', () => {
       'href',
       'https://elearning-platform-neon.vercel.app/'
     );
+  });
+});
+
+describe('product launchpad', () => {
+  it('opens Fitora and Stratos in a new tab from their logos', () => {
+    setup();
+    const fitora = screen.getByRole('link', { name: /^Mở ứng dụng Fitora/ });
+    expect(fitora).toHaveAttribute('href', 'https://nguyenngoctuyen11032003.github.io/Fitora/#/login');
+    expect(fitora).toHaveAttribute('target', '_blank');
+    expect(fitora.getAttribute('rel')).toContain('noopener');
+    expect(fitora.querySelector('img')).toHaveAttribute('src', '/products/fitora.webp');
+    const stratos = screen.getByRole('link', { name: /^Mở ứng dụng Stratos/ });
+    expect(stratos).toHaveAttribute('href', 'https://nguyenngoctuyen11032003.github.io/Note_mytasks/');
+  });
+
+  it('downloads the FoFreeXit installer', () => {
+    setup();
+    const link = screen.getByRole('link', { name: /^Tải bộ cài FoFreeXit/ });
+    expect(link).toHaveAttribute('href', '/downloads/FoFreeXit-Setup-0.1.0.exe');
+    expect(link).toHaveAttribute('download');
+    expect(link).not.toHaveAttribute('target');
+  });
+
+  it('offers the installer in the FoFreeXit details', () => {
+    setup();
+    const lead = content.vi.projects.items[0];
+    fireEvent.click(screen.getByRole('button', { name: `Xem chi tiết ${lead.title}` }));
+    const dialog = screen.getByRole('dialog');
+    const link = within(dialog).getByRole('link', { name: /^Tải bộ cài/ });
+    expect(link).toHaveAttribute('href', '/downloads/FoFreeXit-Setup-0.1.0.exe');
   });
 });
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { ArrowUpRight, Globe } from 'lucide-react';
+import { ArrowDownToLine, ArrowUpRight, Globe } from 'lucide-react';
 import { useLang } from '../context/LangContext';
 import { Modal } from './ui/Modal';
 import { TechTag } from './ui/TechTag';
@@ -63,7 +63,19 @@ export function ProjectDetailModal({ project, initialImage = 0, onClose }: Proje
           <p className="type-label text-white/45 mb-3">
             {project.role} · {project.scope}
           </p>
-          <h3 className="type-h3 text-ink mb-4">{project.title}</h3>
+          <div className="flex items-center gap-4 mb-4">
+            {project.logo && (
+              <img
+                src={project.logo}
+                alt=""
+                width={56}
+                height={56}
+                className="h-14 w-14 flex-shrink-0 object-contain"
+                style={{ filter: `drop-shadow(0 8px 20px ${project.accent ?? '#34d399'}88)` }}
+              />
+            )}
+            <h3 className="type-h3 text-ink">{project.title}</h3>
+          </div>
           <p className="type-small text-white/55 mb-4">{project.years}</p>
           {project.description && (
             <p className="type-body text-white/70 mb-4">{project.description}</p>
@@ -85,8 +97,20 @@ export function ProjectDetailModal({ project, initialImage = 0, onClose }: Proje
               ))}
             </div>
           )}
-          {(project.liveUrl || project.repoUrl || project.caseStudyUrl) && (
-            <div className="flex flex-wrap gap-3 mt-5">
+          {(project.liveUrl || project.repoUrl || project.caseStudyUrl || project.download) && (
+            <div className="flex flex-wrap items-center gap-3 mt-5">
+              {project.download && (
+                <a
+                  href={project.download.href}
+                  download
+                  className="stage-cta"
+                  aria-label={`${t.projects.downloadLabel} ${project.title} — ${project.download.meta}`}
+                >
+                  <ArrowDownToLine size={15} aria-hidden="true" />
+                  {t.projects.downloadLabel}
+                  <span className="type-label opacity-60">{project.download.meta}</span>
+                </a>
+              )}
               {project.liveUrl && externalLink(project.liveUrl, t.projects.liveLabel, <Globe size={14} aria-hidden="true" />)}
               {project.repoUrl && externalLink(project.repoUrl, t.projects.repoLabel, <TechIcon name="GitHub" size={14} />)}
               {project.caseStudyUrl && externalLink(project.caseStudyUrl, t.projects.caseStudyLabel)}

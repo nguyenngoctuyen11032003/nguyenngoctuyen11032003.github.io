@@ -38,6 +38,15 @@ export interface ProjectItem {
   liveUrl?: string;
   repoUrl?: string;
   images?: ProjectImage[];
+  /** Square app icon with a transparent background: shown on the product launchpad, and as the
+   *  card cover when the project has no screenshots. */
+  logo?: string;
+  /** Brand colour the icon glows with. */
+  accent?: string;
+  /** One-line pitch under the product name on the launchpad. */
+  tagline?: string;
+  /** Desktop installer offered for download. */
+  download?: { href: string; meta: string };
 }
 
 export interface CertificationItem {
@@ -187,6 +196,16 @@ export interface Content {
     prevImage: string;
     nextImage: string;
     showImage: string;
+    downloadLabel: string;
+    /** Strip of products people can open or install right away. */
+    launchpad: {
+      eyebrow: string;
+      heading: string;
+      intro: string;
+      openLabel: string;
+      webLabel: string;
+      desktopLabel: string;
+    };
     items: ProjectItem[];
   };
   archive: {
@@ -335,6 +354,11 @@ const GYM_REPO = `${links.github}/gym-for-beginners`;
 const GYM_URL = 'https://gym-for-beginners-ten.vercel.app/';
 const ELEARNING_URL = 'https://elearning-platform-neon.vercel.app/';
 const CRM_TAGS = ['NestJS', 'Next.js', 'PostgreSQL', 'Redis', 'Docker'];
+const FITORA_TAGS = ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL'];
+const FITORA_URL = 'https://nguyenngoctuyen11032003.github.io/Fitora/#/login';
+const STRATOS_TAGS = ['JavaScript', 'Vite', 'Supabase', 'PostgreSQL', 'Chart.js'];
+const STRATOS_URL = 'https://nguyenngoctuyen11032003.github.io/Note_mytasks/';
+const FOFREEXIT_DOWNLOAD = '/downloads/FoFreeXit-Setup-0.1.0.exe';
 
 export const content: Record<Lang, Content> = {
   vi: {
@@ -384,7 +408,7 @@ export const content: Record<Lang, Content> = {
       statsLabel: 'Số liệu nổi bật',
       stats: [
         { value: '2+', label: 'năm kinh nghiệm CNTT' },
-        { value: '9', label: 'dự án tiêu biểu' },
+        { value: '11', label: 'dự án tiêu biểu' },
         { value: '3', label: 'công ty đã gắn bó' },
       ],
     },
@@ -504,6 +528,15 @@ export const content: Record<Lang, Content> = {
       prevImage: 'Ảnh trước',
       nextImage: 'Ảnh tiếp theo',
       showImage: 'Xem ảnh',
+      downloadLabel: 'Tải bộ cài',
+      launchpad: {
+        eyebrow: 'Dùng thử ngay',
+        heading: 'Sản phẩm đang chạy',
+        intro: 'Ba sản phẩm cá nhân tôi tự làm từ đầu đến cuối — mở trên web hoặc cài thẳng về máy.',
+        openLabel: 'Mở ứng dụng',
+        webLabel: 'Web app',
+        desktopLabel: 'Windows',
+      },
       items: [
         {
           title: 'FoFreeXit — Phần mềm chỉnh sửa PDF',
@@ -520,12 +553,54 @@ export const content: Record<Lang, Content> = {
             'Trợ lý AI: tóm tắt, trích xuất, dịch và ra lệnh thao tác PDF bằng ngôn ngữ tự nhiên; giao diện sáng/tối, song ngữ.',
           ],
           tags: FOFREEXIT_TAGS,
+          logo: '/products/fofreexit.webp',
+          accent: '#3b82f6',
+          tagline: 'Sửa PDF như Word, miễn phí',
+          download: { href: FOFREEXIT_DOWNLOAD, meta: 'Windows 10/11 · v0.1.0 · 13,8 MB' },
           images: [
             img('fofreexit-1.png', 'FoFreeXit đang mở một file PDF với bảng Trợ lý AI bên phải'),
             img('fofreexit-2.png', 'FoFreeXit ở giao diện tối với menu chọn chủ đề'),
             img('fofreexit-3.png', 'Tab Trang: chèn, xoá, xoay, gộp/tách PDF và thêm hình mờ'),
             img('fofreexit-4.png', 'Sửa nội dung CV trực tiếp như Word kèm Trợ lý AI'),
           ],
+        },
+        {
+          title: 'Fitora — Trợ lý dinh dưỡng & thể hình AI',
+          years: '2026',
+          role: 'Full-Stack Developer',
+          scope: 'Cá nhân · Sản phẩm',
+          description:
+            'Web app ưu tiên điện thoại: chụp món ăn để AI ước tính calo và macro, ghi nhật ký ăn uống, lịch tập và theo dõi tiến trình cơ thể.',
+          highlights: [
+            'Chụp ảnh món ăn, Edge Function AI trên Supabase ước tính calo, protein, carb, fat; chỉnh lại trước khi lưu vào nhật ký.',
+            'Lên lịch và ghi buổi tập; theo dõi nước, bước chân, cân nặng, số đo và ảnh tiến trình.',
+            'Báo cáo tuần/tháng bằng biểu đồ; giao diện "Ember Glass" tiếng Việt, cài được như ứng dụng (PWA).',
+            'Dùng chung tài khoản với Stratos (Note_mytasks): một email đăng nhập cả hai app, dữ liệu riêng được bảo vệ bằng RLS.',
+          ],
+          tags: FITORA_TAGS,
+          liveUrl: FITORA_URL,
+          logo: '/products/fitora.webp',
+          accent: '#22d3ee',
+          tagline: 'Chụp món ăn, AI tính calo & macro',
+        },
+        {
+          title: 'Stratos (Note_mytasks) — Hệ sinh thái năng suất cá nhân',
+          years: '2026',
+          role: 'Full-Stack Developer',
+          scope: 'Cá nhân · Sản phẩm',
+          description:
+            'Ghi chú, công việc, lịch, bấm giờ, KPI, chi tiêu – ngân sách, mua sắm và báo cáo gói gọn trong một web app.',
+          highlights: [
+            'Ghi chú Markdown với sổ, thẻ, ghim và mẫu checklist / nhật ký / biên bản họp; tạo công việc thẳng từ checklist.',
+            'Công việc dạng danh sách hoặc bảng kéo-thả, nhập nhanh bằng ngôn ngữ tự nhiên ("mai 9h #sales !cao ~30p hằng tuần"), việc lặp lại.',
+            'Bấm giờ + Pomodoro, mục tiêu KPI có dự báo hoàn thành, chi tiêu nhập nhanh ("50k cà phê") kèm ngân sách theo danh mục.',
+            'Báo cáo tuần/tháng/quý/năm so với kỳ trước, xuất CSV và PDF; bảng lệnh Ctrl/⌘+K, phím tắt, PWA, giao diện sáng/tối.',
+          ],
+          tags: STRATOS_TAGS,
+          liveUrl: STRATOS_URL,
+          logo: '/products/stratos.webp',
+          accent: '#8b5cf6',
+          tagline: 'Ghi chú, công việc, chi tiêu — một nơi',
         },
         {
           title: 'Nền tảng tuyển dụng Việt – Đài',
@@ -899,7 +974,7 @@ export const content: Record<Lang, Content> = {
       statsLabel: 'Key figures',
       stats: [
         { value: '2+', label: 'years of IT experience' },
-        { value: '9', label: 'featured projects' },
+        { value: '11', label: 'featured projects' },
         { value: '3', label: 'companies worked at' },
       ],
     },
@@ -1019,6 +1094,15 @@ export const content: Record<Lang, Content> = {
       prevImage: 'Previous image',
       nextImage: 'Next image',
       showImage: 'Show image',
+      downloadLabel: 'Download installer',
+      launchpad: {
+        eyebrow: 'Try them now',
+        heading: 'Products in the wild',
+        intro: 'Three personal products I built end to end — open them on the web or install one on your machine.',
+        openLabel: 'Open app',
+        webLabel: 'Web app',
+        desktopLabel: 'Windows',
+      },
       items: [
         {
           title: 'FoFreeXit — PDF Editor',
@@ -1035,12 +1119,54 @@ export const content: Record<Lang, Content> = {
             'AI assistant: summarize, extract, translate and run PDF commands in natural language; light/dark themes, bilingual UI.',
           ],
           tags: FOFREEXIT_TAGS,
+          logo: '/products/fofreexit.webp',
+          accent: '#3b82f6',
+          tagline: 'Edit PDFs like Word, for free',
+          download: { href: FOFREEXIT_DOWNLOAD, meta: 'Windows 10/11 · v0.1.0 · 13.8 MB' },
           images: [
             img('fofreexit-1.png', 'FoFreeXit with a PDF open and the AI Assistant panel on the right'),
             img('fofreexit-2.png', 'FoFreeXit in dark mode with the theme menu open'),
             img('fofreexit-3.png', 'Page tab: insert, delete, rotate, merge/split PDFs and add watermarks'),
             img('fofreexit-4.png', 'Word-like in-place editing of a resume with the AI Assistant'),
           ],
+        },
+        {
+          title: 'Fitora — AI Nutrition & Fitness Coach',
+          years: '2026',
+          role: 'Full-Stack Developer',
+          scope: 'Personal · Product',
+          description:
+            'A mobile-first web app: snap a meal and AI estimates calories and macros, plus a food diary, workout planner and body progress tracking.',
+          highlights: [
+            'Snap a meal photo and an AI Edge Function on Supabase estimates calories, protein, carbs and fat; adjust before saving to the diary.',
+            'Plan and log workouts; track water, steps, weight, body measurements and progress photos.',
+            'Weekly and monthly reports with charts; Vietnamese "Ember Glass" UI, installable as a PWA.',
+            'Shares accounts with Stratos (Note_mytasks): one email signs in to both apps, private data protected by RLS.',
+          ],
+          tags: FITORA_TAGS,
+          liveUrl: FITORA_URL,
+          logo: '/products/fitora.webp',
+          accent: '#22d3ee',
+          tagline: 'Snap a meal, AI counts calories & macros',
+        },
+        {
+          title: 'Stratos (Note_mytasks) — Personal Productivity Suite',
+          years: '2026',
+          role: 'Full-Stack Developer',
+          scope: 'Personal · Product',
+          description:
+            'Notes, tasks, calendar, time tracking, KPIs, expenses and budgets, shopping and reports in a single web app.',
+          highlights: [
+            'Markdown notes with notebooks, tags, pins and checklist / journal / meeting templates; turn checklist items into tasks.',
+            'Tasks as a list or drag-and-drop board, natural-language quick add ("tomorrow 9am #sales !high ~30m weekly"), recurring tasks.',
+            'Timer + Pomodoro, KPI goals with completion forecasts, quick expense entry ("50k coffee") with per-category budgets.',
+            'Weekly to yearly reports compared with the previous period, CSV and PDF export; Ctrl/⌘+K command palette, shortcuts, PWA, light/dark themes.',
+          ],
+          tags: STRATOS_TAGS,
+          liveUrl: STRATOS_URL,
+          logo: '/products/stratos.webp',
+          accent: '#8b5cf6',
+          tagline: 'Notes, tasks and spending in one place',
         },
         {
           title: 'Vietnam–Taiwan Recruitment Platform',

@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { useLang } from '../context/LangContext';
 import { TechTag } from './ui/TechTag';
 import { ProjectDetailModal } from './ProjectDetailModal';
+import { ProductLaunchpad } from './projects/ProductLaunchpad';
 import { splitAccent } from './hero/text';
 import { mediumOf, thumbOf } from '../data/thumbs';
 import { useScrollScale } from '../hooks/useScrollScale';
@@ -193,6 +195,10 @@ function BentoCard({ project, span, origin, onOpen }: BentoCardProps) {
                 decoding="async"
                 className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
               />
+            ) : project.logo ? (
+              <div className="bento-logo" style={{ '--accent': project.accent ?? '#34d399' } as CSSProperties}>
+                <img src={project.logo} alt="" loading="lazy" decoding="async" />
+              </div>
             ) : (
               <div className="h-full w-full bg-[radial-gradient(circle_at_30%_20%,rgba(52,211,153,0.2),transparent_60%)]" />
             )}
@@ -282,6 +288,8 @@ export function ProjectsSection() {
             </span>
           </a>
         </motion.header>
+
+        <ProductLaunchpad items={t.projects.items} />
 
         {lead && (
           <motion.div

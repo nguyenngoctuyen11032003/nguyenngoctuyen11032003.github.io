@@ -86,7 +86,7 @@ describe('HeroSection', () => {
   it('lists the key figures with their final values', () => {
     setup();
     expect(screen.getByText('dự án tiêu biểu')).toBeInTheDocument();
-    expect(screen.getByText('9')).toBeInTheDocument();
+    expect(screen.getByText('11')).toBeInTheDocument();
   });
 
   it('links the scroll cue to the next section', () => {

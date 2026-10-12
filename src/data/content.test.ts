@@ -47,6 +47,9 @@ const ALLOWED = new Set([
   'jQuery',
   'Leaflet',
   'OpenStreetMap',
+  'Supabase',
+  'Vite',
+  'Chart.js',
 ]);
 
 describe('content', () => {
@@ -57,8 +60,8 @@ describe('content', () => {
     expect(content.vi.nav.links.length).toBe(content.en.nav.links.length);
   });
 
-  it('has exactly 9 featured projects', () => {
-    expect(content.vi.projects.items).toHaveLength(9);
+  it('has exactly 11 featured projects', () => {
+    expect(content.vi.projects.items).toHaveLength(11);
   });
 
   it('has exactly 3 experience entries matching the CV', () => {

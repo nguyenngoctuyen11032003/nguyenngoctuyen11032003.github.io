@@ -1565,7 +1565,7 @@ button:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
-   Product launchpad (projects/ProductLaunchpad.tsx). A fixed 1172 x 760 design
+   Product launchpad (projects/ProductLaunchpad.tsx). A fixed 1172 x 820 design
    canvas, every element absolutely placed in design px and the whole canvas
    scaled by one transform (--k). A starfield, a pill that switches product, a
    glass badge, the heading, a glow CTA, then the payoff: a 3D ring of cards
@@ -1586,11 +1586,11 @@ button:focus-visible {
 }
 .vx-stage {
   position: relative;
-  height: var(--h, 760px);
+  height: var(--h, 820px);
   overflow: hidden;
   background: #020204;
-  /* fade into the black section above and below */
-  mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 100%);
+  /* fade into the black section above and below, so the frame bleeds out instead of being cut */
+  mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 90%, transparent 100%);
 }
 .vx-bg {
   position: absolute;
@@ -1605,7 +1605,7 @@ button:focus-visible {
   left: 50%;
   top: 0;
   width: 1172px;
-  height: 760px;
+  height: 820px;
   transform: translateX(-50%) scale(var(--k, 1));
   transform-origin: 50% 0;
 }
@@ -2030,7 +2030,7 @@ button:focus-visible {
   left: 165px;
   top: 558px;
   width: 842px;
-  height: 202px;
+  height: 262px;
   border-radius: 28px 28px 0 0;
   overflow: hidden;
   z-index: 100;

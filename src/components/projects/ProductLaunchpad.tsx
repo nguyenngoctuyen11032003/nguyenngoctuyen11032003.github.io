@@ -22,7 +22,7 @@ export function displayHost(url: string): string {
 
 // Design canvas (px). Everything inside is placed in these units and scaled by one --k.
 const CW = 1172;
-const CH = 760;
+const CH = 820;
 const TAB_MAX = 1080;
 const TAB_MIN = 701;
 const DW_MIN = 920;
@@ -122,7 +122,14 @@ function Card({ shot, label }: { shot: Shot; label: string }) {
   }
   return (
     <>
-      <img src={shot.src} alt="" loading="lazy" decoding="async" onError={broken} />
+      <img
+        src={shot.src}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        onError={broken}
+        style={{ objectPosition: `${shot.product.previewFocus ?? 50}% 0` }}
+      />
       <div className="vx-fill" />
       <div className="vx-cv" style={{ top: 262, fontSize: 5.4, fontWeight: 600, letterSpacing: '.2em' }}>
         {name.toUpperCase()}
@@ -373,6 +380,7 @@ export function ProductLaunchpad({
       role="region"
       aria-labelledby="launch-heading"
       data-intro={intro}
+      data-no-trail
       onPointerEnter={() => setHeld(true)}
       onPointerLeave={() => setHeld(false)}
       onFocus={() => setHeld(true)}

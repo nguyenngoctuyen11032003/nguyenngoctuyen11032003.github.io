@@ -47,6 +47,8 @@ export interface ProjectItem {
   tagline?: string;
   /** Screenshot of the running product, shown in the launchpad's browser frame. */
   preview?: string;
+  /** Horizontal focal point of the preview for portrait crops, in percent of its width (0 = left). */
+  previewFocus?: number;
   /** Desktop installer offered for download. */
   download?: { href: string; meta: string };
 }
@@ -562,6 +564,7 @@ export const content: Record<Lang, Content> = {
           tags: FOFREEXIT_TAGS,
           logo: '/products/fofreexit.webp',
           preview: '/projects/medium/fofreexit-1.webp',
+          previewFocus: 44,
           accent: '#3b82f6',
           tagline: 'Sửa PDF như Word, miễn phí',
           download: { href: FOFREEXIT_DOWNLOAD, meta: 'Windows 10/11 · v0.1.0 · 13,8 MB' },
@@ -589,6 +592,7 @@ export const content: Record<Lang, Content> = {
           liveUrl: FITORA_URL,
           logo: '/products/fitora.webp',
           preview: '/products/shots/fitora.webp',
+          previewFocus: 17,
           accent: '#2dd4bf',
           tagline: 'Chụp món ăn, AI tính calo & macro',
         },
@@ -609,6 +613,7 @@ export const content: Record<Lang, Content> = {
           liveUrl: STRATOS_URL,
           logo: '/products/stratos.webp',
           preview: '/products/shots/stratos.webp',
+          previewFocus: 31,
           accent: '#8b5cf6',
           tagline: 'Ghi chú, công việc, chi tiêu — một nơi',
         },
@@ -678,6 +683,7 @@ export const content: Record<Lang, Content> = {
           repoUrl: GYM_REPO,
           logo: '/products/vyora.webp',
           preview: '/products/shots/vyora.webp',
+          previewFocus: 50,
           accent: '#6366f1',
           tagline: 'Giáo án tập gym, bấm giờ và tính kcal',
           images: [
@@ -1136,6 +1142,7 @@ export const content: Record<Lang, Content> = {
           tags: FOFREEXIT_TAGS,
           logo: '/products/fofreexit.webp',
           preview: '/projects/medium/fofreexit-1.webp',
+          previewFocus: 44,
           accent: '#3b82f6',
           tagline: 'Edit PDFs like Word, for free',
           download: { href: FOFREEXIT_DOWNLOAD, meta: 'Windows 10/11 · v0.1.0 · 13.8 MB' },
@@ -1163,6 +1170,7 @@ export const content: Record<Lang, Content> = {
           liveUrl: FITORA_URL,
           logo: '/products/fitora.webp',
           preview: '/products/shots/fitora.webp',
+          previewFocus: 17,
           accent: '#2dd4bf',
           tagline: 'Snap a meal, AI counts calories & macros',
         },
@@ -1183,6 +1191,7 @@ export const content: Record<Lang, Content> = {
           liveUrl: STRATOS_URL,
           logo: '/products/stratos.webp',
           preview: '/products/shots/stratos.webp',
+          previewFocus: 31,
           accent: '#8b5cf6',
           tagline: 'Notes, tasks and spending in one place',
         },
@@ -1252,6 +1261,7 @@ export const content: Record<Lang, Content> = {
           repoUrl: GYM_REPO,
           logo: '/products/vyora.webp',
           preview: '/products/shots/vyora.webp',
+          previewFocus: 50,
           accent: '#6366f1',
           tagline: 'Gym plans, workout timer and kcal',
           images: [

@@ -65,6 +65,36 @@
     "w": 1917,
     "h": 967
   },
+  "/projects/fitora-1.png": {
+    "thumb": "/projects/thumbs/fitora-1.webp",
+    "medium": "/projects/medium/fitora-1.webp",
+    "w": 1917,
+    "h": 967
+  },
+  "/projects/fitora-2.png": {
+    "thumb": "/projects/thumbs/fitora-2.webp",
+    "medium": "/projects/medium/fitora-2.webp",
+    "w": 397,
+    "h": 860
+  },
+  "/projects/fitora-3.png": {
+    "thumb": "/projects/thumbs/fitora-3.webp",
+    "medium": "/projects/medium/fitora-3.webp",
+    "w": 392,
+    "h": 860
+  },
+  "/projects/fitora-4.png": {
+    "thumb": "/projects/thumbs/fitora-4.webp",
+    "medium": "/projects/medium/fitora-4.webp",
+    "w": 393,
+    "h": 858
+  },
+  "/projects/fitora-5.png": {
+    "thumb": "/projects/thumbs/fitora-5.webp",
+    "medium": "/projects/medium/fitora-5.webp",
+    "w": 392,
+    "h": 857
+  },
   "/projects/fofreexit-1.png": {
     "thumb": "/projects/thumbs/fofreexit-1.webp",
     "medium": "/projects/medium/fofreexit-1.webp",

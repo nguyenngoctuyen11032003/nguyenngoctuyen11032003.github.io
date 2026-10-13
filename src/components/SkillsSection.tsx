@@ -6,6 +6,7 @@ import { TechIcon, hoverColor } from './ui/techIcons';
 import { TECH_ICONS } from './ui/techIconData';
 import { FOCUS_STOPS, SCROLL_LENGTH, VAR_TARGETS, computeFrame, lerp } from './skills/cinema';
 import { archPositions } from './skills/arch';
+import { useFarSkip } from '../hooks/useFarSkip';
 import { sfx, milestone } from '../sound';
 import './skills/skills.css';
 
@@ -41,6 +42,7 @@ export function SkillsSection() {
   const total = new Set(groups.flatMap((g) => g.items)).size;
   const [active, setActive] = useState(count);
   const [jumping, setJumping] = useState(false);
+  useFarSkip(sectionRef);
 
   useEffect(() => {
     const section = sectionRef.current;

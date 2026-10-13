@@ -68,11 +68,17 @@ export function ImageTrail() {
         card.style.zIndex = String(z++);
         const rot = tiltFor(ux, Math.random() * 2 - 1);
         const drop = 28 + Math.random() * 10;
-        const timing: KeyframeAnimationOptions = { duration: TRAIL_DURATION, fill: 'both' };
-        running.set(card, [
+        // No fill after the end: a finished card drops back to its idle style (invisible), so it
+        // lets go of its compositor layer instead of holding it for the rest of the visit.
+        const timing: KeyframeAnimationOptions = { duration: TRAIL_DURATION, fill: 'backwards' };
+        const anims = [
           card.animate(cardKeyframes(fromX, fromY, x, y, rot, drop), timing),
           card.lastElementChild!.animate(STREAK_KEYFRAMES, timing),
-        ]);
+        ];
+        running.set(card, anims);
+        anims[0].onfinish = () => {
+          if (running.get(card) === anims) running.delete(card);
+        };
         return;
       }
     };

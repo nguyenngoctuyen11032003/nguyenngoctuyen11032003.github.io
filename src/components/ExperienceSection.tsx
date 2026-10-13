@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
-import { motion, useInView, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useInView, useMotionValue, useMotionValueEvent, useSpring, useTransform } from 'framer-motion';
 import { useLang } from '../context/LangContext';
 import { splitAccent } from './hero/text';
 import { TechTag } from './ui/TechTag';
@@ -155,9 +155,41 @@ export function ExperienceSection() {
   const [before, accent] = splitAccent(t.experience.heading, t.experience.headingAccent);
   const [from, to] = careerSpan(items);
 
-  // The rail fills top-down as the list scrolls past the upper third of the viewport.
-  const { scrollYProgress } = useScroll({ target: listRef, offset: ['start 65%', 'end 65%'] });
-  const fill = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
+  // The rail fills top-down as the list scrolls past the line 65% down the viewport. Measured
+  // only while the list is on screen (the only time it can change): a page-wide scroll tracker
+  // would read layout on every frame of the sections below too, forcing extra style flushes.
+  const progress = useMotionValue(0);
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list || typeof IntersectionObserver === 'undefined') return;
+    let raf = 0;
+    let visible = false;
+    const measure = () => {
+      raf = 0;
+      const rect = list.getBoundingClientRect();
+      const line = window.innerHeight * 0.65;
+      progress.set(rect.height > 0 ? Math.min(1, Math.max(0, (line - rect.top) / rect.height)) : 0);
+    };
+    const schedule = () => {
+      if (visible && !raf) raf = requestAnimationFrame(measure);
+    };
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      // On the way out, settle on the end it left by (a fast scroll can skip the last frames).
+      if (visible) schedule();
+      else measure();
+    });
+    io.observe(list);
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      io.disconnect();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      cancelAnimationFrame(raf);
+    };
+  }, [progress]);
+  const fill = useSpring(progress, { stiffness: 140, damping: 30, restDelta: 0.001 });
   // The head rides a track-tall rail moved by translateY (a % of its own height, i.e. the track's),
   // so following the scroll never re-lays out the list the way animating `top` would.
   const headY = useTransform(fill, (v) => `${v * 100}%`);

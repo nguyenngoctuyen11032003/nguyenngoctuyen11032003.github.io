@@ -197,7 +197,9 @@ function BentoCard({ project, span, origin, onOpen }: BentoCardProps) {
               />
             ) : project.logo ? (
               <div className="bento-logo" style={{ '--accent': project.accent ?? '#34d399' } as CSSProperties}>
-                <img src={project.logo} alt="" loading="lazy" decoding="async" />
+                <span className="bento-logo-float">
+                  <img src={project.logo} alt="" loading="lazy" decoding="async" />
+                </span>
               </div>
             ) : (
               <div className="h-full w-full bg-[radial-gradient(circle_at_30%_20%,rgba(52,211,153,0.2),transparent_60%)]" />

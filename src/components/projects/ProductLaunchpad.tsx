@@ -50,7 +50,9 @@ export function ringTransform(i: number, phase: number) {
   const c = Math.cos(r);
   return {
     transform: `translate3d(${(R * Math.sin(r)).toFixed(2)}px,0,${(R * (1 - c)).toFixed(2)}px) rotateY(${(-a).toFixed(3)}deg)`,
-    filter: `brightness(${(0.84 + 0.5 * (1 / c - 1)).toFixed(3)})`,
+    // Darker toward the centre (was brightness(0.84..1)); drawn as a black layer's opacity, which
+    // the compositor blends for free, instead of a per-card filter pass every frame.
+    dim: Math.max(0, 0.16 - 0.5 * (1 / c - 1)).toFixed(3),
   };
 }
 
@@ -311,7 +313,7 @@ export function ProductLaunchpad({
       }
       el.style.visibility = 'visible';
       el.style.transform = p.transform;
-      el.style.filter = p.filter;
+      (el.lastElementChild as HTMLElement).style.opacity = p.dim;
     }
   }, []);
   useEffect(() => {
@@ -407,6 +409,7 @@ export function ProductLaunchpad({
                   >
                     <Card shot={shot} label={l.heading} />
                     <div className="vx-edge" />
+                    <div className="vx-dim" />
                   </div>
                 );
               })}

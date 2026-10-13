@@ -92,6 +92,9 @@ export function useHeroMotion(refs: HeroMotionRefs) {
       kick();
     };
     const onScroll = () => {
+      // Off screen the hero needs nothing; reading scrollY here would only force a style flush
+      // in the middle of whichever section is animating.
+      if (!visible) return;
       scrollTarget = scrollQuery.matches ? Math.max(0, window.scrollY) : 0;
       kick();
     };

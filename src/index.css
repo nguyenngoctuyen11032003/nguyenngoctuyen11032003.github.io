@@ -299,8 +299,9 @@ button:focus-visible {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: overlay;
+    /* Plain alpha, no blend mode: an overlay blend over a whole section made the GPU re-blend
+       every layer under it on each scroll frame. */
+    opacity: 0.022;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
@@ -315,6 +316,10 @@ button:focus-visible {
   --hw: min(30vw, 380px);
   --archive-pad: clamp(16px, 2.6vw, 34px);
   height: 175vh;
+}
+/* More than a screen away (useFarSkip): skip the sphere, so its ~50 card layers cost nothing. */
+.archive[data-far] .archive-pin {
+  content-visibility: hidden;
 }
 .archive-pin {
   position: sticky;
@@ -370,11 +375,6 @@ button:focus-visible {
   border-radius: 3px;
   background: #0a0a0a;
   transition: transform 0.5s ease;
-  /* Depth dimming (--d, written by the camera loop every frame). Over this opaque card,
-     brightness(1 - d) looks the same as a black veil of alpha d, but it is applied on the
-     compositor instead of repainting the screenshot each frame. */
-  filter: brightness(calc(1 - var(--d, 0)));
-  will-change: filter;
 }
 .archive-card:hover figure {
   transform: scale(1.045);
@@ -630,10 +630,10 @@ button:focus-visible {
   height: var(--trail-size);
   margin: calc(var(--trail-size) / -2) 0 0 calc(var(--trail-size) / -2);
   border-radius: 6px;
-  /* Not 0: an invisible-but-drawn card is rasterised up front, so its first deal never stalls. */
-  opacity: 0.001;
-  /* Each card keeps its own composited layer, so dealing one never repaints the others. */
-  will-change: transform, opacity;
+  /* Idle cards are not drawn and hold no layer: 84 always-on layers cost every frame of every
+     section. A dealt card runs a transform/opacity animation, which promotes it to its own
+     compositor layer for exactly as long as it plays (its photo is decoded up front). */
+  opacity: 0;
   backface-visibility: hidden;
   box-shadow:
     0 6px 12px -4px rgba(0, 0, 0, 0.75),
@@ -1416,10 +1416,11 @@ button:focus-visible {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(circle, #000 1px, transparent 1px);
+  /* A 4px dot tile as an image: the same pattern as a radial-gradient, far cheaper to raster. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Ccircle cx='2' cy='2' r='1'/%3E%3C/svg%3E");
   background-size: 4px 4px;
+  /* Black dots: plain alpha looks identical to a multiply blend and needs no extra GPU pass. */
   opacity: 0.07;
-  mix-blend-mode: multiply;
 }
 .bento-count {
   position: absolute;
@@ -1443,14 +1444,16 @@ button:focus-visible {
   place-items: center;
   padding: 16px;
   background: rgba(5, 5, 5, 0.6);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, backdrop-filter 0.4s ease, -webkit-backdrop-filter 0.4s ease;
 }
+/* The blur exists only while shown: an idle backdrop filter on every tile is re-blurred each
+   frame as the tiles scale with scroll. */
 .bento-card:hover .bento-hover,
 .bento-card:focus-within .bento-hover {
   opacity: 1;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 .bento-card:hover .bento-count {
   opacity: 0;
@@ -1552,12 +1555,19 @@ button:focus-visible {
   background-size: 36px 36px;
   mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
 }
+/* The float runs on a wrapper: on the img itself the animation would put its 40px drop shadow
+   on the compositor, re-blurred every frame; here it is painted once into the wrapper's layer. */
+.bento-logo-float {
+  position: relative;
+  display: block;
+  animation: launch-float 5s ease-in-out infinite;
+}
 .bento-logo img {
   position: relative;
+  display: block;
   width: clamp(110px, 13vw, 168px);
   height: auto;
   filter: drop-shadow(0 18px 40px color-mix(in srgb, var(--accent) 55%, transparent));
-  animation: launch-float 5s ease-in-out infinite;
   transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .bento-card:hover .bento-logo img {
@@ -1589,8 +1599,28 @@ button:focus-visible {
   height: var(--h, 820px);
   overflow: hidden;
   background: #020204;
-  /* fade into the black section above and below, so the frame bleeds out instead of being cut */
-  mask-image: linear-gradient(180deg, transparent 0, #000 7%, #000 90%, transparent 100%);
+}
+/* Fade into the black section above and below, so the frame bleeds out instead of being cut.
+   Black veils over a black page look the same as a mask, without re-masking the whole stage
+   (and its turning ring) on every frame. */
+.vx-stage::before,
+.vx-stage::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+.vx-stage::before {
+  top: 0;
+  height: 7%;
+  background: linear-gradient(180deg, #000, rgba(0, 0, 0, 0));
+}
+.vx-stage::after {
+  bottom: 0;
+  height: 10%;
+  background: linear-gradient(0deg, #000, rgba(0, 0, 0, 0));
 }
 .vx-bg {
   position: absolute;
@@ -1975,6 +2005,12 @@ button:focus-visible {
 .vx-card.broken img {
   display: none;
 }
+.vx-dim {
+  inset: 0;
+  background: #000;
+  opacity: 0;
+  will-change: opacity;
+}
 .vx-edge {
   inset: 0;
   border-radius: 12px;
@@ -2340,7 +2376,7 @@ button:focus-visible {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bento-logo img {
+  .bento-logo-float {
     animation: none;
   }
   .vx-page img {
@@ -2365,8 +2401,8 @@ button:focus-visible {
   width: min(900px, 90vw);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(52, 211, 153, 0.09) 0%, rgba(34, 211, 238, 0.04) 35%, transparent 65%);
-  filter: blur(30px);
+  /* Already a soft gradient: no blur filter, which made any repaint near it re-blur 900px. */
+  background: radial-gradient(circle, rgba(52, 211, 153, 0.09) 0%, rgba(34, 211, 238, 0.04) 35%, transparent 68%);
   pointer-events: none;
 }
 .exp-mono {

@@ -3,6 +3,7 @@ import { ArrowDown } from 'lucide-react';
 import { useLang } from '../../context/LangContext';
 import { ProjectDetailModal } from '../ProjectDetailModal';
 import { sfx } from '../../sound';
+import { useFarSkip } from '../../hooks/useFarSkip';
 import { collectShots, depthDim, fibonacciSphere, rotatePoint, sphereMetrics, titleOverlap } from './sphere';
 
 const DRAG_DEG_PER_PX = 0.13;
@@ -33,6 +34,7 @@ export function ArchiveSphere() {
   const points = useMemo(() => fibonacciSphere(shots.length), [shots.length]);
 
   const sectionRef = useRef<HTMLElement>(null);
+  useFarSkip(sectionRef);
   const stageRef = useRef<HTMLDivElement>(null);
   const worldRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
@@ -69,7 +71,6 @@ export function ArchiveSphere() {
     let velY = 0;
     let camZ = 0;
     let dragging = false;
-    const lastDim: number[] = [];
     // Title half-size and each card's height, measured in layout(); used to fade cards off the title.
     let titleHalf = { w: 0, h: 0 };
     const cardH: number[] = [];
@@ -154,12 +155,11 @@ export function ArchiveSphere() {
         const nearFade = z > near ? Math.max(0, 1 - (z - near) / 190) : 1;
         // Cards passing in front of the title turn into ghosts so the words stay readable.
         const ghost = titleOverlap(pos, R, titleHalf.w, titleHalf.h, metrics.cardWidth, cardH[i] ?? metrics.cardWidth);
-        const fade = nearFade * (1 - ghost * 0.85);
+        // Depth dimming folds into the card's opacity: over the black stage, a card at alpha
+        // 1 - dim looks the same as one darkened by brightness(1 - dim), without a filter pass
+        // per card on every frame.
+        const fade = nearFade * (1 - ghost * 0.85) * (1 - dim);
         const fadeR = Math.round(fade * 100) / 100;
-        if (lastDim[i] !== dim) {
-          card.style.setProperty('--d', String(dim));
-          lastDim[i] = dim;
-        }
         if (lastFade[i] !== fadeR) {
           card.style.opacity = String(fadeR);
           lastFade[i] = fadeR;

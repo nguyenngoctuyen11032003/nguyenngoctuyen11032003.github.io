@@ -7,48 +7,205 @@
    sky, back stack (glow + floor grid), shade, title, core arch, TypeScript
    core, foreground slabs, slider, controls, intro copy, story panels.
    ------------------------------------------------------------------------ */
+/* The per-frame properties (cinema.ts VAR_TARGETS) are registered as non-inherited: each is
+   written on the element that reads it, so a change restyles that one element instead of its
+   whole subtree. Their defaults are the initial values. --panel3-pe stays inherited (the
+   security link inside the panel reads it). */
+@property --sky-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1;
+}
+@property --back-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1;
+}
+@property --back-x {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --back-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --back-scale {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0.76;
+}
+@property --glow-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: 10vh;
+}
+@property --glow-scale {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0.78;
+}
+@property --glow-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0.72;
+}
+@property --grid-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: 20vh;
+}
+@property --grid-sharp-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0.8;
+}
+@property --grid-soft-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0;
+}
+@property --shade-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0;
+}
+@property --title-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --title-scale {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1;
+}
+@property --title-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1;
+}
+@property --arch-x {
+  syntax: '*';
+  inherits: false;
+  initial-value: -50%;
+}
+@property --arch-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --arch-scale {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1.02;
+}
+@property --arch-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1;
+}
+@property --split-left-x {
+  syntax: '*';
+  inherits: false;
+  initial-value: -50%;
+}
+@property --split-right-x {
+  syntax: '*';
+  inherits: false;
+  initial-value: -50%;
+}
+@property --split-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --split-scale {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1;
+}
+@property --core-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0;
+}
+@property --core-x {
+  syntax: '*';
+  inherits: false;
+  initial-value: -50%;
+}
+@property --core-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: -50%;
+}
+@property --core-scale {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1.06;
+}
+@property --intro-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --intro-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 1;
+}
+@property --panel2-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0;
+}
+@property --panel2-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: calc(-50% + 58px);
+}
+@property --panel3-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0;
+}
+@property --panel3-y {
+  syntax: '*';
+  inherits: false;
+  initial-value: calc(-50% + 58px);
+}
+@property --slider-enter-x {
+  syntax: '*';
+  inherits: false;
+  initial-value: 420vw;
+}
+@property --slider-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0;
+}
+@property --slider-pe {
+  syntax: '*';
+  inherits: false;
+  initial-value: none;
+}
+@property --slider-top {
+  syntax: '*';
+  inherits: false;
+  initial-value: calc(50vh - 158px);
+}
+@property --controls-opacity {
+  syntax: '*';
+  inherits: false;
+  initial-value: 0;
+}
+
 .tech {
-  --sky-opacity: 1;
-  --back-opacity: 1;
-  --back-x: 0px;
-  --back-y: 0px;
-  --back-scale: 0.76;
-  --glow-y: 10vh;
-  --glow-scale: 0.78;
-  --glow-opacity: 0.72;
-  --grid-y: 20vh;
-  --grid-sharp-opacity: 0.8;
-  --grid-soft-opacity: 0;
-  --shade-opacity: 0;
   --tint: 2, 14, 10;
-  --title-y: 0px;
-  --title-scale: 1;
-  --title-opacity: 1;
-  --arch-x: -50%;
-  --arch-y: 0px;
-  --arch-scale: 1.02;
-  --split-left-x: -50%;
-  --split-right-x: -50%;
-  --split-y: 0px;
-  --split-scale: 1;
-  --core-opacity: 0;
-  --core-x: -50%;
-  --core-y: -50%;
-  --core-scale: 1.06;
-  --intro-y: 0px;
-  --intro-opacity: 1;
-  --panel2-opacity: 0;
-  --panel2-y: calc(-50% + 58px);
-  --panel3-opacity: 0;
-  --panel3-y: calc(-50% + 58px);
   --panel3-pe: none;
-  --slider-enter-x: 420vw;
-  --slider-pe: none;
-  --slider-opacity: 0;
-  --slider-top: calc(50vh - 158px);
   --label-h: 40px;
-  --arch-opacity: 1;
-  --controls-opacity: 0;
   --card-w: clamp(340px, 19.4vw, 410px);
   --card-h: 236px;
   --gap: clamp(16px, 1.15vw, 24px);
@@ -63,6 +220,10 @@
   height: calc(100vh + var(--scroll-length, 4100px));
   background: #000;
   color: var(--cream);
+}
+/* More than a screen away (useFarSkip): skip the whole stage, so its layers cost nothing. */
+.tech[data-far] .tech-stage {
+  content-visibility: hidden;
 }
 .tech-stage {
   position: sticky;
@@ -129,7 +290,6 @@
   z-index: 1;
   height: 90%;
   opacity: var(--glow-opacity);
-  mix-blend-mode: screen;
   transform: translate3d(-50%, calc(var(--glow-y) - 110px), 0) scale(var(--glow-scale));
   will-change: transform, opacity;
 }
@@ -316,6 +476,8 @@
     repeating-radial-gradient(circle at 50% 50%, rgba(52, 211, 153, 0.09) 0 1px, transparent 1px 64px);
   -webkit-mask: radial-gradient(closest-side, #000 40%, transparent 100%);
   mask: radial-gradient(closest-side, #000 40%, transparent 100%);
+  /* Moves every frame: its own layer, so the big masked gradient is rastered once, not per frame. */
+  will-change: transform, opacity;
 }
 .tech-core-mark {
   width: min(26vw, 380px);
@@ -332,6 +494,7 @@
   width: min(118vw, 2240px);
   height: 44vh;
   pointer-events: none;
+  will-change: transform;
 }
 .tech-slab-left {
   transform: translate3d(var(--split-left-x), var(--split-y), 0) scale(var(--split-scale));

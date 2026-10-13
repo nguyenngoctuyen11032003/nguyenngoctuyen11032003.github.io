@@ -694,10 +694,11 @@ export const content: Record<Lang, Content> = {
           accent: '#6366f1',
           tagline: 'Giáo án tập gym, bấm giờ và tính kcal',
           images: [
-            img('gym-1.png', 'Trang lịch tập trong tuần với bộ chọn ngày và thời gian nghỉ'),
-            img('gym-2.png', 'Danh sách bài tập của buổi Lưng, Xô và Tay trước với số set, số rep'),
-            img('gym-3.png', 'Giao diện điện thoại: lịch tập trong tuần và buổi tập hôm nay'),
-            img('gym-4.png', 'Bottom drawer chi tiết bài Pull-up với video hướng dẫn dạng Shorts'),
+            img('gym-1.png', 'Màn hình đăng nhập Vyora trong khung điện thoại'),
+            img('gym-2.png', 'Tab Hôm nay: buổi Chân, mông và core với bộ chọn ngày và danh sách bài tập'),
+            img('gym-3.png', 'Tab Đang tập: đồng hồ bấm giờ và nút theo lịch hôm nay'),
+            img('gym-4.png', 'Tab Tuần này: tổng kcal đã đốt, số buổi, số phút và các buổi gần đây'),
+            img('gym-5.png', 'Hồ sơ đồng bộ từ Fitora: chiều cao, cân nặng, tuổi và mức vận động'),
           ],
         },
         {
@@ -1279,10 +1280,11 @@ export const content: Record<Lang, Content> = {
           accent: '#6366f1',
           tagline: 'Gym plans, workout timer and kcal',
           images: [
-            img('gym-1.png', 'Weekly schedule page with day selector and rest times'),
-            img('gym-2.png', 'Back, lats and biceps session with sets and reps per exercise'),
-            img('gym-3.png', "Mobile view: weekly schedule and today's session"),
-            img('gym-4.png', 'Pull-up detail bottom drawer with a Shorts how-to video'),
+            img('gym-1.png', 'Vyora sign-in screen inside a phone frame'),
+            img('gym-2.png', 'Today tab: legs, glutes and core session with day picker and exercise list'),
+            img('gym-3.png', "Workout tab: session timer and a start button for today's plan"),
+            img('gym-4.png', 'This week tab: total kcal burned, sessions, minutes and recent workouts'),
+            img('gym-5.png', 'Profile synced from Fitora: height, weight, age and activity level'),
           ],
         },
         {

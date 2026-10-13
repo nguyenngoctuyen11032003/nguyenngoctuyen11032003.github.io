@@ -122,26 +122,32 @@
   "/projects/gym-1.png": {
     "thumb": "/projects/thumbs/gym-1.webp",
     "medium": "/projects/medium/gym-1.webp",
-    "w": 1907,
-    "h": 973
+    "w": 1917,
+    "h": 965
   },
   "/projects/gym-2.png": {
     "thumb": "/projects/thumbs/gym-2.webp",
     "medium": "/projects/medium/gym-2.webp",
-    "w": 1890,
-    "h": 971
+    "w": 392,
+    "h": 855
   },
   "/projects/gym-3.png": {
     "thumb": "/projects/thumbs/gym-3.webp",
     "medium": "/projects/medium/gym-3.webp",
-    "w": 400,
-    "h": 858
+    "w": 391,
+    "h": 853
   },
   "/projects/gym-4.png": {
     "thumb": "/projects/thumbs/gym-4.webp",
     "medium": "/projects/medium/gym-4.webp",
-    "w": 397,
-    "h": 858
+    "w": 396,
+    "h": 861
+  },
+  "/projects/gym-5.png": {
+    "thumb": "/projects/thumbs/gym-5.webp",
+    "medium": "/projects/medium/gym-5.webp",
+    "w": 396,
+    "h": 857
   },
   "/projects/hotel-1.png": {
     "thumb": "/projects/thumbs/hotel-1.webp",

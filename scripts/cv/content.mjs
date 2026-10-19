@@ -3,7 +3,7 @@
 
 const GITHUB = 'https://github.com/nguyenngoctuyen11032003';
 const LINKEDIN = 'https://www.linkedin.com/in/tuy%E1%BB%81n-nguy%E1%BB%85n-ng%E1%BB%8Dc-40432243b/';
-const PORTFOLIO = 'https://tuyen-portfolio-six.vercel.app/';
+const PORTFOLIO = 'https://nguyenngoctuyen11032003.github.io/';
 const LINGUO = 'https://nguyenngoctuyen11032003.github.io/Linguo/';
 const FITORA = 'https://nguyenngoctuyen11032003.github.io/Fitora/';
 const EMAIL = 'nguyenngoctuyen11032003@gmail.com';
@@ -14,7 +14,7 @@ const link = (label, href) => ({ label, href });
 export const links = {
   email: link(EMAIL, `mailto:${EMAIL}`),
   phone: '+84399045920',
-  portfolio: link('tuyen-portfolio-six.vercel.app', PORTFOLIO),
+  portfolio: link('nguyenngoctuyen11032003.github.io', PORTFOLIO),
   github: link('github.com/nguyenngoctuyen11032003', GITHUB),
   linkedin: link('linkedin.com/in/tuyen-nguyen-ngoc', LINKEDIN),
   linguo: link('nguyenngoctuyen11032003.github.io/Linguo', LINGUO),

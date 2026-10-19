@@ -70,8 +70,8 @@ describe('HeroSection', () => {
   it('renders CV download and GitHub links', () => {
     setup();
     const cv = screen.getByRole('link', { name: /Tải CV/ });
-    expect(cv).toHaveAttribute('href', '/cv.pdf');
-    expect(cv).toHaveAttribute('download');
+    expect(cv).toHaveAttribute('href', '/cv-vi.pdf');
+    expect(cv).toHaveAttribute('download', 'Nguyen-Ngoc-Tuyen-CV-VI.pdf');
     const gh = screen.getByRole('link', { name: /GitHub/ });
     expect(gh).toHaveAttribute('href', links.github);
     expect(gh).toHaveAttribute('target', '_blank');

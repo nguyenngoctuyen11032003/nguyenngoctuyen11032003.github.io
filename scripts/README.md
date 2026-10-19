@@ -4,12 +4,12 @@ Helper scripts that generate static assets in `public/`. They are not part of th
 
 | Script | Output | Run |
 | --- | --- | --- |
-| `make_cv.py` | `public/cv.pdf` (one-page English CV) | `python3 scripts/make_cv.py` |
+| `cv/make_cv.mjs` | `public/cv-vi.pdf`, `public/cv-en.pdf` (two-page A4 CV with photo) and `public/cv.pdf` (copy of the English one, for old links) | `npm run cv` |
 | `make_og.py` | `public/og-cover.jpg` (1200×630 share image) | `python3 scripts/make_og.py` |
 
-Requirements: Python 3, `pip install reportlab pillow`.
+`make_og.py` needs Python 3 and `pip install reportlab pillow`.
 
-Update the CV text in `make_cv.py` whenever `src/data/content.ts` changes, so the site and the CV stay consistent.
+The CV is HTML printed to PDF by headless Chrome (set `CHROME` if it is not in `C:/Program Files/Google/Chrome/Application/`), set in Be Vietnam Pro from Google Fonts, so it needs network access. The photo is cropped from `public/image trail effect/1791432222021_…jpg`. Text lives in `cv/content.mjs`: update it whenever `src/data/content.ts` changes, so the site and the CV stay consistent. The script fails if a column overflows its A4 page; `npm run cv -- --preview <dir>` also writes a PNG of every page. Close the PDFs in any viewer first, or Windows will refuse to overwrite them.
 
 ## Fonts
 

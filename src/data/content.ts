@@ -4,8 +4,12 @@ export const links = {
   github: 'https://github.com/nguyenngoctuyen11032003',
   linkedin: 'https://www.linkedin.com/in/tuy%E1%BB%81n-nguy%E1%BB%85n-ng%E1%BB%8Dc-40432243b/',
   caseStudies: 'https://github.com/nguyenngoctuyen11032003/project-case-studies',
-  cv: '/cv.pdf',
+  /** Two-page CV per language, built by scripts/cv/make_cv.mjs. */
+  cv: { vi: '/cv-vi.pdf', en: '/cv-en.pdf' },
 } as const;
+
+/** File name the browser saves the CV under. */
+export const cvFileName = (lang: Lang) => `Nguyen-Ngoc-Tuyen-CV-${lang.toUpperCase()}.pdf`;
 
 export interface ExperienceItem {
   period: string;

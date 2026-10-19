@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowDown, ArrowRight, ArrowUpRight, Download, MoveHorizontal, ShieldCheck } from 'lucide-react';
 import { useLang } from '../context/LangContext';
 import { useIntroDone } from '../context/IntroContext';
-import { links } from '../data/content';
+import { cvFileName, links } from '../data/content';
 import { sfx } from '../sound';
 import { STARS_A, STARS_B } from './hero/stars';
 import { canRender3D } from './hero/webgl';
@@ -276,7 +276,7 @@ export function HeroSection() {
             <ArrowRight size={16} aria-hidden="true" />
             <span className="hero-glow-pool" aria-hidden="true" />
           </a>
-          <a href={links.cv} download className="hero-ghost hero-anim">
+          <a href={links.cv[lang]} download={cvFileName(lang)} className="hero-ghost hero-anim">
             <Download size={16} aria-hidden="true" />
             <span>{t.hero.ctaCv}</span>
           </a>

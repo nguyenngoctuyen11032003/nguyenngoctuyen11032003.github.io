@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLang } from '../context/LangContext';
 import { useIntroDone } from '../context/IntroContext';
-import { links } from '../data/content';
+import { cvFileName, links } from '../data/content';
 import { thumbOf } from '../data/thumbs';
 import { TechIcon } from './ui/techIcons';
 import { sfx, SoundToggle } from '../sound';
@@ -265,7 +265,7 @@ export function Navbar() {
   const connectItems = [
     { label: 'GitHub', desc: menu.connectDesc[0], href: links.github, external: true },
     { label: 'LinkedIn', desc: menu.connectDesc[1], href: links.linkedin, external: true },
-    { label: menu.cvLabel, desc: menu.connectDesc[2], href: links.cv, download: true },
+    { label: menu.cvLabel, desc: menu.connectDesc[2], href: links.cv[lang], download: cvFileName(lang) },
     { label: t.a11y.email, desc: menu.connectDesc[3], href: `mailto:${t.contact.email}` },
   ];
 
@@ -397,7 +397,7 @@ export function Navbar() {
                   className="dd-link"
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
-                  download={item.download || undefined}
+                  download={item.download}
                 >
                   <span>
                     <strong>{item.label}</strong>
@@ -483,7 +483,7 @@ export function Navbar() {
           <a href={links.linkedin} target="_blank" rel="noopener noreferrer" onClick={() => setSheetOpen(false)}>
             LinkedIn
           </a>
-          <a href={links.cv} download onClick={() => setSheetOpen(false)}>
+          <a href={links.cv[lang]} download={cvFileName(lang)} onClick={() => setSheetOpen(false)}>
             {menu.cvLabel}
           </a>
         </div>

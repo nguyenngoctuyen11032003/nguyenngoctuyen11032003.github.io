@@ -176,7 +176,7 @@ describe('content', () => {
       linkedin:
         'https://www.linkedin.com/in/tuy%E1%BB%81n-nguy%E1%BB%85n-ng%E1%BB%8Dc-40432243b/',
       caseStudies: 'https://github.com/nguyenngoctuyen11032003/project-case-studies',
-      cv: '/cv.pdf',
+      cv: { vi: '/cv-vi.pdf', en: '/cv-en.pdf' },
     });
   });
 });

@@ -221,6 +221,30 @@
     "w": 1862,
     "h": 937
   },
+  "/projects/linguo-1.png": {
+    "thumb": "/projects/thumbs/linguo-1.webp",
+    "medium": "/projects/medium/linguo-1.webp",
+    "w": 1917,
+    "h": 967
+  },
+  "/projects/linguo-2.png": {
+    "thumb": "/projects/thumbs/linguo-2.webp",
+    "medium": "/projects/medium/linguo-2.webp",
+    "w": 1917,
+    "h": 897
+  },
+  "/projects/linguo-3.png": {
+    "thumb": "/projects/thumbs/linguo-3.webp",
+    "medium": "/projects/medium/linguo-3.webp",
+    "w": 1917,
+    "h": 897
+  },
+  "/projects/linguo-4.png": {
+    "thumb": "/projects/thumbs/linguo-4.webp",
+    "medium": "/projects/medium/linguo-4.webp",
+    "w": 1917,
+    "h": 887
+  },
   "/projects/mechmap-1.png": {
     "thumb": "/projects/thumbs/mechmap-1.webp",
     "medium": "/projects/medium/mechmap-1.webp",

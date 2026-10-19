@@ -14,7 +14,7 @@ function setup() {
 }
 
 describe('ProjectsSection', () => {
-  it('renders all 11 project cards', () => {
+  it('renders all 12 project cards', () => {
     setup();
     for (const p of content.vi.projects.items) {
       expect(screen.getByRole('heading', { name: p.title })).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe('ProjectsSection', () => {
   it('localizes detail button labels', () => {
     setup();
     const buttons = screen.getAllByRole('button', { name: /^Xem chi tiết \S/ });
-    expect(buttons).toHaveLength(11);
+    expect(buttons).toHaveLength(12);
   });
 
   it('shows case study link in modal when available', () => {
@@ -104,17 +104,18 @@ describe('ProjectsSection', () => {
 describe('product launchpad', () => {
   const switcher = () => screen.getByRole('tablist', { name: 'Chọn sản phẩm' });
 
-  it('switches between the four products', () => {
+  it('switches between the five products', () => {
     setup();
     const tabs = within(switcher()).getAllByRole('tab');
-    expect(tabs.map((t) => t.textContent)).toEqual(['FoFreeXit', 'Fitora', 'Stratos', 'Vyora']);
+    expect(tabs.map((t) => t.textContent)).toEqual(['FoFreeXit', 'Linguo', 'Fitora', 'Stratos', 'Vyora']);
     expect(tabs[0]).toHaveAttribute('aria-selected', 'true');
     expect(tabs[0].querySelector('img')).toHaveAttribute('src', '/products/fofreexit.webp');
   });
 
-  it('opens Fitora, Stratos and Vyora in a new tab', () => {
+  it('opens Linguo, Fitora, Stratos and Vyora in a new tab', () => {
     setup();
     const cases = [
+      ['Linguo', 'https://nguyenngoctuyen11032003.github.io/Linguo/'],
       ['Fitora', 'https://nguyenngoctuyen11032003.github.io/Fitora/#/login'],
       ['Stratos', 'https://nguyenngoctuyen11032003.github.io/Note_mytasks/'],
       ['Vyora', 'https://nguyenngoctuyen11032003.github.io/Vyora/'],
@@ -140,8 +141,8 @@ describe('product launchpad', () => {
     setup();
     const tabs = within(switcher()).getAllByRole('tab');
     fireEvent.keyDown(tabs[0], { key: 'ArrowLeft' });
-    expect(tabs[3]).toHaveAttribute('aria-selected', 'true');
-    expect(tabs[3]).toHaveFocus();
+    expect(tabs[4]).toHaveAttribute('aria-selected', 'true');
+    expect(tabs[4]).toHaveFocus();
   });
 
   it('opens the details of the selected product', () => {

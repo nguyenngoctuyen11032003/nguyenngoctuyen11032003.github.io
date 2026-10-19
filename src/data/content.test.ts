@@ -50,6 +50,7 @@ const ALLOWED = new Set([
   'Supabase',
   'Vite',
   'Chart.js',
+  'PWA',
 ]);
 
 describe('content', () => {
@@ -60,8 +61,8 @@ describe('content', () => {
     expect(content.vi.nav.links.length).toBe(content.en.nav.links.length);
   });
 
-  it('has exactly 11 featured projects', () => {
-    expect(content.vi.projects.items).toHaveLength(11);
+  it('has exactly 12 featured projects', () => {
+    expect(content.vi.projects.items).toHaveLength(12);
   });
 
   it('has exactly 3 experience entries matching the CV', () => {

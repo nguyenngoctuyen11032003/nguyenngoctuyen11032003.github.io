@@ -1659,9 +1659,9 @@ button:focus-visible {
 
 /* ---- Nav pill: product switcher ---------------------------------------- */
 .vx-nav {
-  left: 247px;
+  left: 196px;
   top: 3px;
-  width: 678px;
+  width: 780px;
   height: 64px;
   border-radius: 32px;
   z-index: 400;
@@ -1926,7 +1926,7 @@ button:focus-visible {
 /* Instance A: details button in the pill */
 .vx-nav .vx-btn {
   position: absolute;
-  left: 530.7px;
+  left: 632.5px;
   top: 10.5px;
   width: 125.5px;
   height: 39.5px;
@@ -2178,11 +2178,11 @@ button:focus-visible {
 /* ---- Tablet: the design window narrows so type stops shrinking ---------- */
 @media (max-width: 1080px) {
   .vx-nav {
-    left: 266px;
-    width: 640px;
+    left: 246px;
+    width: 680px;
   }
   .vx-nav .vx-btn {
-    left: 500px;
+    left: 540px;
   }
   .vx-wm {
     display: none;

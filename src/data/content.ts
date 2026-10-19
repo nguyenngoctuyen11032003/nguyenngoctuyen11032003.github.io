@@ -370,7 +370,9 @@ const FITORA_TAGS = ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Postgre
 const FITORA_URL = 'https://nguyenngoctuyen11032003.github.io/Fitora/#/login';
 const STRATOS_TAGS = ['JavaScript', 'Vite', 'Supabase', 'PostgreSQL', 'Chart.js'];
 const STRATOS_URL = 'https://nguyenngoctuyen11032003.github.io/Note_mytasks/';
-const FOFREEXIT_DOWNLOAD = '/downloads/FoFreeXit-Setup-0.1.0.exe';
+const LINGUO_TAGS = ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL', 'PWA'];
+const LINGUO_URL = 'https://nguyenngoctuyen11032003.github.io/Linguo/';
+const FOFREEXIT_DOWNLOAD ='/downloads/FoFreeXit-Setup-0.1.0.exe';
 
 export const content: Record<Lang, Content> = {
   vi: {
@@ -420,7 +422,7 @@ export const content: Record<Lang, Content> = {
       statsLabel: 'Số liệu nổi bật',
       stats: [
         { value: '2+', label: 'năm kinh nghiệm CNTT' },
-        { value: '11', label: 'dự án tiêu biểu' },
+        { value: '12', label: 'dự án tiêu biểu' },
         { value: '3', label: 'công ty đã gắn bó' },
       ],
     },
@@ -577,6 +579,34 @@ export const content: Record<Lang, Content> = {
             img('fofreexit-2.png', 'FoFreeXit ở giao diện tối với menu chọn chủ đề'),
             img('fofreexit-3.png', 'Tab Trang: chèn, xoá, xoay, gộp/tách PDF và thêm hình mờ'),
             img('fofreexit-4.png', 'Sửa nội dung CV trực tiếp như Word kèm Trợ lý AI'),
+          ],
+        },
+        {
+          title: 'Linguo — Ứng dụng học ngoại ngữ cho người Việt',
+          years: '2026',
+          role: 'Full-Stack Developer',
+          scope: 'Cá nhân · Sản phẩm',
+          description:
+            'Web app PWA giúp người Việt học tiếng Anh, Hàn, Nhật và Đức theo lộ trình cá nhân hoá: xác định trình độ, đặt mục tiêu và đồng hành đến khi luyện thi; cài được lên điện thoại và học được cả khi mất mạng.',
+          highlights: [
+            'Bốn ngôn ngữ bám theo chuẩn thi: tiếng Anh đến C2 (CEFR), tiếng Hàn đến TOPIK 6, tiếng Nhật đến JLPT N1, tiếng Đức đến B2 (Goethe, 195 bài).',
+            'Kiểm tra đầu vào thích ứng theo từng kỹ năng; lộ trình ước lượng số giờ cần để đạt mục tiêu và gợi ý bài học tiếp theo.',
+            'Bài học giải thích bằng tiếng Việt với nhiều dạng bài tập; ôn tập ngắt quãng bằng thuật toán FSRS; đề thi mô phỏng chấm điểm theo từng phần.',
+            'Gia sư AI chữa bài viết, phân tích câu và đóng vai hội thoại (gọi món, hỏi đường, phỏng vấn xin việc); luyện nói có ghi âm.',
+            'PWA offline-first tự đồng bộ khi có mạng lại, lớp học cho giáo viên, nhắc học qua thông báo đẩy; AI qua Edge Function, bảo mật bằng RLS, CI/CD tự động.',
+          ],
+          tags: LINGUO_TAGS,
+          liveUrl: LINGUO_URL,
+          logo: '/products/linguo.webp',
+          preview: '/projects/medium/linguo-1.webp',
+          previewFocus: 40,
+          accent: '#4ca2d1',
+          tagline: 'Học Anh, Hàn, Nhật, Đức theo lộ trình riêng',
+          images: [
+            img('linguo-1.png', 'Trang chủ Linguo: học thông minh, nhớ lâu hơn, với ba lộ trình tiếng Anh, Hàn, Nhật'),
+            img('linguo-2.png', 'Lộ trình từ điểm xuất phát đến CEFR C1–C2, TOPIK cấp 5–6 và JLPT N1'),
+            img('linguo-3.png', 'Phương pháp học: nhớ lại chủ động, ôn tập ngắt quãng và phản hồi có giải thích'),
+            img('linguo-4.png', 'Giao diện ưu tiên điện thoại với màn hình bắt đầu lộ trình đầu tiên'),
           ],
         },
         {
@@ -1006,7 +1036,7 @@ export const content: Record<Lang, Content> = {
       statsLabel: 'Key figures',
       stats: [
         { value: '2+', label: 'years of IT experience' },
-        { value: '11', label: 'featured projects' },
+        { value: '12', label: 'featured projects' },
         { value: '3', label: 'companies worked at' },
       ],
     },
@@ -1163,6 +1193,34 @@ export const content: Record<Lang, Content> = {
             img('fofreexit-2.png', 'FoFreeXit in dark mode with the theme menu open'),
             img('fofreexit-3.png', 'Page tab: insert, delete, rotate, merge/split PDFs and add watermarks'),
             img('fofreexit-4.png', 'Word-like in-place editing of a resume with the AI Assistant'),
+          ],
+        },
+        {
+          title: 'Linguo — Language Learning for Vietnamese Speakers',
+          years: '2026',
+          role: 'Full-Stack Developer',
+          scope: 'Personal · Product',
+          description:
+            'A PWA that helps Vietnamese speakers learn English, Korean, Japanese and German on a personalized path: it places you, sets a goal and takes you through to exam prep. Installable on a phone and usable offline.',
+          highlights: [
+            'Four languages mapped to exam standards: English to C2 (CEFR), Korean to TOPIK 6, Japanese to JLPT N1 and German to B2 (Goethe, 195 lessons).',
+            'Adaptive placement test per skill; the path estimates the hours needed to reach the goal and suggests the next lesson.',
+            'Lessons explained in Vietnamese with many exercise types, FSRS spaced repetition, and mock exams scored section by section.',
+            'AI tutor that corrects writing, breaks down sentences and role-plays conversations (ordering food, asking for directions, job interviews); speaking practice with recording.',
+            'Offline-first PWA that syncs when back online, teacher classrooms, push reminders; AI through Edge Functions, RLS security and automated CI/CD.',
+          ],
+          tags: LINGUO_TAGS,
+          liveUrl: LINGUO_URL,
+          logo: '/products/linguo.webp',
+          preview: '/projects/medium/linguo-1.webp',
+          previewFocus: 40,
+          accent: '#4ca2d1',
+          tagline: 'English, Korean, Japanese and German, on your own path',
+          images: [
+            img('linguo-1.png', 'Linguo home page: learn smarter, remember longer, with English, Korean and Japanese paths'),
+            img('linguo-2.png', 'Learning paths from the starting point to CEFR C1–C2, TOPIK levels 5–6 and JLPT N1'),
+            img('linguo-3.png', 'The method: active recall, spaced repetition and explained feedback'),
+            img('linguo-4.png', 'Mobile-first interface with the screen for starting a first learning path'),
           ],
         },
         {
